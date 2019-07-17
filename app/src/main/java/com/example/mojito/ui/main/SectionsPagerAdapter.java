@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.mojito.R;
+import com.example.mojito.Tab1;
+import com.example.mojito.Tab2;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -29,7 +31,21 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
+        switch(position) {
+            case 0:
+//                fragment = Fragment.instantiate(mContext,"Tab 1");
+//                break;
+                return new Tab1();
+            case 1:
+//                fragment = Fragment.instantiate(mContext, "Tab 2");
+//                break;
+                return new Tab2();
+
+            default:
+//                fragment = Fragment.instantiate(mContext, "None");
+//                break;
+                return null;
+        }
     }
 
     @Nullable
