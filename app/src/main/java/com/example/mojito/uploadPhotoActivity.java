@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
@@ -35,17 +36,16 @@ public class uploadPhotoActivity extends Activity {
     public View imageview;
     String latitude; //위도
     String longitude;//경도
-    String latitudeRef,longitudeRef;
+    String latitudeRef, longitudeRef;
     double lat, lng;//double 위도, 경도
     String nation;//사진을 찍은 나라
 
     private boolean valid = false;
 
 
-
-    public String LATITUDE ;
-    public String LATITUDE_REF ;
-    public String LONGITUDE ;
+    public String LATITUDE;
+    public String LATITUDE_REF;
+    public String LONGITUDE;
     public String LONGITUDE_REF;
     Float Latitude, Longitude;
 
@@ -65,7 +65,7 @@ public class uploadPhotoActivity extends Activity {
         String welcomupload = i.getStringExtra("upload");
 
 
-        Button galleryLogin = (Button)findViewById(R.id.gogallery);
+        Button galleryLogin = (Button) findViewById(R.id.gogallery);
         galleryLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +75,7 @@ public class uploadPhotoActivity extends Activity {
         });
 
 
-        imageview = (ImageView)findViewById(R.id.image1);
+        imageview = (ImageView) findViewById(R.id.image1);
 //        String filename = Environment.getExternalStorageDirectory() //filename should be changed
 //                .getPath() + "/20140705_162816.jpg";
 //        try {
@@ -100,7 +100,7 @@ public class uploadPhotoActivity extends Activity {
         if (resultCode != Activity.RESULT_OK) {
             Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
 
-            if(tempFile != null) {
+            if (tempFile != null) {
                 if (tempFile.exists()) {
                     if (tempFile.delete()) {
                         Log.e(TAG, tempFile.getAbsolutePath() + " 삭제 성공");
@@ -124,7 +124,7 @@ public class uploadPhotoActivity extends Activity {
                  *  Uri 스키마를
                  *  content:/// 에서 file:/// 로  변경한다.
                  */
-                String[] proj = { MediaStore.Images.Media.DATA };
+                String[] proj = {MediaStore.Images.Media.DATA};
 
                 assert photoUri != null;
                 cursor = getContentResolver().query(photoUri, proj, null, null, null);
@@ -147,13 +147,13 @@ public class uploadPhotoActivity extends Activity {
         Knownation(tempFile);
     } //앨범으로 가서 tempFile에 선택한 사진 담아오기
 
-    private void Knownation(File tempFile){
+    private void Knownation(File tempFile) {
 //        Uri filename = photoUri;
         String stringtemp = tempFile.toString();
         try {
             ExifInterface exif = new ExifInterface(stringtemp);
             showExif(exif);
-            findAddress(Latitude,Longitude);
+            findAddress(Latitude, Longitude);
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "Error!", Toast.LENGTH_LONG).show();
@@ -195,29 +195,26 @@ public class uploadPhotoActivity extends Activity {
 //        lng = Double.parseDouble(longitude);
 
         //modified
-      LATITUDE = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
-     LATITUDE_REF = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF);
-      LONGITUDE = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
-     LONGITUDE_REF = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF);
+        LATITUDE = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
+        LATITUDE_REF = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF);
+        LONGITUDE = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
+        LONGITUDE_REF = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF);
         // your Final lat Long Values
 
-        if((LATITUDE !=null)
-                && (LATITUDE_REF !=null)
+        if ((LATITUDE != null)
+                && (LATITUDE_REF != null)
                 && (LONGITUDE != null)
-                && (LONGITUDE_REF !=null))
-        {
+                && (LONGITUDE_REF != null)) {
 
-            if(LATITUDE_REF.equals("N")){
+            if (LATITUDE_REF.equals("N")) {
                 Latitude = convertToDegree(LATITUDE);
-            }
-            else{
+            } else {
                 Latitude = 0 - convertToDegree(LATITUDE);
             }
 
-            if(LONGITUDE_REF.equals("E")){
+            if (LONGITUDE_REF.equals("E")) {
                 Longitude = convertToDegree(LONGITUDE);
-            }
-            else{
+            } else {
                 Longitude = 0 - convertToDegree(LONGITUDE);
             }
 
@@ -227,38 +224,36 @@ public class uploadPhotoActivity extends Activity {
         //modified
 
 
-
-        Log.e("Image Information : ",Latitude+ " , "+ Longitude);
+        Log.e("Image Information : ", Latitude + " , " + Longitude);
     } //사진의 위도 경도 알아내기
 
 
     //modified22
-    private Float convertToDegree(String stringDMS){
+    private Float convertToDegree(String stringDMS) {
         Float result = null;
         String[] DMS = stringDMS.split(",", 3);
 
         String[] stringD = DMS[0].split("/", 2);
         Double D0 = new Double(stringD[0]);
         Double D1 = new Double(stringD[1]);
-        Double FloatD = D0/D1;
+        Double FloatD = D0 / D1;
 
         String[] stringM = DMS[1].split("/", 2);
         Double M0 = new Double(stringM[0]);
         Double M1 = new Double(stringM[1]);
-        Double FloatM = M0/M1;
+        Double FloatM = M0 / M1;
 
         String[] stringS = DMS[2].split("/", 2);
         Double S0 = new Double(stringS[0]);
         Double S1 = new Double(stringS[1]);
-        Double FloatS = S0/S1;
+        Double FloatS = S0 / S1;
 
-        result = new Float(FloatD + (FloatM/60) + (FloatS/3600));
+        result = new Float(FloatD + (FloatM / 60) + (FloatS / 3600));
 
         return result;
 
 
     }
-
 
 
     @Override
@@ -285,20 +280,53 @@ public class uploadPhotoActivity extends Activity {
 //        return (tag + " : " + exif.getAttribute(tag) + "\n");
 //    }
 
-    private String findAddress (double lat, double lng){
+    private String findAddress(double lat, double lng) {
         //StringBuffer bf = new StringBuffer();
         Geocoder geocoder = new Geocoder(this);
 
-        try{
+        try {
             List<Address> mResultList = geocoder.getFromLocation(lat, lng, 1);
             nation = mResultList.get(0).getCountryName();
-        }catch  (IOException e){
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
         Log.e("nation is ....", nation);
-        return  nation;
+        countryIndex(nation);
+        return nation;
     } //위도 경도를 받아서 나라 반환해주기
+
+    private int countryIndex(String nation) { //분류 다시 할 필요!!
+        int index = -1;
+        String [][] countryName =
+                                    { {"대한민국"}
+                                    ,{"중국", "대만"}
+                                    ,{"일본"}
+                                    ,{"라오스", "베트남", "말레이시아", "태국", "인도네시아", "필리핀", "싱가포르", "캄보디아", "동티모르", "브루나이","몰디브","인도"}
+                                    ,{"미국","캐나다"}
+                                    , {"독일", "프랑스", "이탈리아", "영국", "스페인", "그리스", "스위스", "네덜란드", "폴란드", "크로아디아", "오스트리아", "스웨덴", "우크라이나", "벨기에", "헝가리", "체코"}
+                                    ,{"이집트","수단","리비아","알제리","튀니지","모로코","이란","요르단"}
+                                    ,{"러시아","괌","몽골","호주"}  };
+
+//        String[] Korea = {"대한민국"};
+//        String[] ChinaTiwan= {"중국", "대만"};
+//        String[] Japan = {"일본"};
+//        String[] SouthEastAsiaIndia= {"라오스", "베트남", "말레이시아", "태국", "인도네시아", "필리핀", "싱가포르", "캄보디아", "동티모르", "브루나이","몰디브","인도"};
+//        String[] UsaCanada = {"미국","캐나다"};
+//        String[] Europe = {"독일", "프랑스", "이탈리아", "영국", "스페인", "그리스", "스위스", "네덜란드", "폴란드", "크로아디아", "오스트리아", "스웨덴", "우크라이나", "벨기에", "헝가리", "체코"};
+//        String [] MiddleAsiaAfrica = {"이집트","수단","리비아","알제리","튀니지","모로코","이란","요르단"};
+//        String [] Else= {"러시아","괌","몽골","호주"};
+        for(int i=0;i<8;i++){
+            for(int k=0;k<countryName[i].length;k++){
+                if(nation.equals(countryName[i][k]))
+                    index = i;
+            }
+        }
+        Log.e("CountryIndex is ...","number: "+index);
+    return index; //index가 -1이면 그 외 국가임!
+    }
 }
+
 
 
 
