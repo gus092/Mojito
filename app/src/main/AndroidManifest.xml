@@ -34,7 +34,7 @@
         <activity android:name=".uploadPhotoActivity"/>
         <activity android:name=".Party.PartyActivity"/>
         <activity android:name=".BaseActivity"/>
-        <activity android:name=".DetailGallery"/>
+        <activity android:name=".CustomGallery"/>
     </application>
 
 

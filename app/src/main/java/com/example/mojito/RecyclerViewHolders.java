@@ -23,7 +23,7 @@ public class RecyclerViewHolders extends RecyclerView.ViewHolder implements View
     @Override
     public void onClick(View view) {
         Toast.makeText(view.getContext(), "Clicked Country Position = " + getPosition(), Toast.LENGTH_SHORT).show();
-        Intent intent2 = new Intent(view.getContext(), DetailGallery.class);
+        Intent intent2 = new Intent(view.getContext(), CustomGallery.class);
         intent2.putExtra("namedir",getPosition());
         view.getContext().startActivity(intent2);
 
