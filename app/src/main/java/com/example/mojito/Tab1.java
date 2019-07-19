@@ -28,6 +28,20 @@ public class Tab1 extends Fragment {
                             startActivity(i);
                         }
                     });
+
+
+        Button mainLogin = (Button)view.findViewById(R.id.mainbtn);
+        mainLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), BaseActivity.class);
+                i.putExtra("main", "main");
+                startActivity(i);
+            }
+        });
+
+
+
             return view;
     }
 }

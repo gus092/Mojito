@@ -297,7 +297,7 @@ public class uploadPhotoActivity extends Activity {
     } //위도 경도를 받아서 나라 반환해주기
 
     private int countryIndex(String nation) { //분류 다시 할 필요!!
-        int index = -1;
+        int index = 7;
         String [][] countryName =
                                     { {"대한민국"}
                                     ,{"중국", "대만"}
@@ -323,7 +323,7 @@ public class uploadPhotoActivity extends Activity {
             }
         }
         Log.e("CountryIndex is ...","number: "+index);
-    return index; //index가 -1이면 그 외 국가임!
+    return index; //index가 7이면 그 외 국가임!
     }
 }
 

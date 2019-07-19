@@ -54,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 //        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED) {
 //            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_CONTACTS)) {
 //
@@ -79,9 +77,11 @@ public class MainActivity extends AppCompatActivity {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-
         checkPermission();
+
+
     }
+
     public void initialize(){
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
@@ -140,5 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+
 
 }
