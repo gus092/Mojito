@@ -1,95 +1,54 @@
 package com.example.mojito;
 
-
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.mojito.Party.PartyActivity;
 import com.example.mojito.ui.main.SectionsPagerAdapter;
+import com.google.android.gms.common.annotation.KeepForSdkWithMembers;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity{
+    private GridLayoutManager lLayout;
     private TextView tvData;
-
+    private FloatingActionButton btnParty;
     String[] permission_list = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_CONTACTS,
             Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.INTERNET
-
     };
 
-//    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 100;
-//    private static final int PICK_FROM_GALLERY = 1;
-
-//    private List<String> Phone_number = new ArrayList<>();
-//    private List<String> Phone_name = new ArrayList<>();
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permission, int[] grantResults) {
-//        switch(requestCode) {
-//            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//
-//                } else {
-//
-//                }
-//                return;
-//            }
-//        }
-//    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.mainactivity);
+        checkPermission();
+        final FloatingActionButton btnParty = findViewById(R.id.findparty);
+        btnParty.setOnClickListener(new FloatingActionButton.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent_party = new Intent(getBaseContext(), PartyActivity.class);
+                startActivity(intent_party);
+            }
 
+        });
 
-//        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED) {
-//            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_CONTACTS)) {
-//
-//            } else {
-//                ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.READ_CONTACTS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-//            }
-//        } else {
-//
-//        }
-//
-//        try {
-//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
-//            } else {
-//                ActivityCompat.requestPermissions(MainActivity.this,
-//                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-//                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-////                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-////                startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        checkPermission();
-    }
-    public void initialize(){
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
     }
 
     public void checkPermission(){
@@ -97,11 +56,9 @@ public class MainActivity extends AppCompatActivity {
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
             return;
         List<String> PermissionList = new ArrayList<>();
-
         for(String permission : permission_list){
             //권한 허용 여부를 확인한다.
             int chk = checkCallingOrSelfPermission(permission);
-
             if(chk == PackageManager.PERMISSION_DENIED){
                 //권한 허용을여부를 확인하는 창을 띄운다
                 PermissionList.add(permission);
@@ -115,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //물어보는 건 두갠데 grandResult의 길이가 3
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -122,25 +80,45 @@ public class MainActivity extends AppCompatActivity {
         {
             if(grantResults.length > 0) {
                 for (int i = 0; i < grantResults.length; i++) {
-                    //허용됬다면
                     if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-
                     } else {
-                        Toast.makeText(getApplicationContext(), "앱권한설정하세요", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Permission Required", Toast.LENGTH_LONG).show();
                         finish();
                         return;
                     }
                 }
             }
             else{
-                Toast.makeText(getApplicationContext(), "앱권한설정하세요", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Permission Required", Toast.LENGTH_LONG).show();
                 finish();
                 return;
             }
-
             initialize();
-
         }
     }
 
+    private List<Item> getAllItemList(){
+        List<Item> allItems = new ArrayList<Item>();
+                allItems.add(new Item("\n# KOREA", R.drawable.korea));
+                allItems.add(new Item("\n# EUROPE", R.drawable.london));
+                allItems.add(new Item("\n# USA\n/CANADA", R.drawable.usa));
+                allItems.add(new Item("\n# JAPAN", R.drawable.japan));
+                allItems.add(new Item("\n# AFRICA", R.drawable.africa));
+                allItems.add(new Item("\n# ASIA\n/INDIA", R.drawable.seaisa));
+                allItems.add(new Item("\n# CHINA\n/TAIWAN", R.drawable.taiwan));
+                allItems.add(new Item("\n# OTHERS", R.drawable.others));
+        return allItems;
+    }
+    public void initialize(){
+        List<Item> rowListItem = getAllItemList();
+        Intent i = getIntent();
+        String welcomupload = i.getStringExtra("main");
+        lLayout = new GridLayoutManager(this, 1);//category spancount
+        RecyclerView rView = (RecyclerView)findViewById(R.id.recycler_view);
+        rView.setHasFixedSize(true);
+        rView.setLayoutManager(lLayout);
+        RecyclerViewAdapter rcAdapter = new RecyclerViewAdapter(this, rowListItem);
+        rView.setAdapter(rcAdapter);
+    }
 }
+

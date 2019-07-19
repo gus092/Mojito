@@ -36,12 +36,10 @@ public class PartyActivity extends AppCompatActivity {
     PartyAdapter adapter;
     Loadpartys loadpartyTask;
     public PartyActivity(){ }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
 
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,7 +49,6 @@ public class PartyActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         loadpartyTask = new Loadpartys();
         loadpartyTask.execute();
-
 
         // ADD party Button
         Button make_party = root.findViewById(R.id.make_party);
@@ -72,10 +69,6 @@ public class PartyActivity extends AppCompatActivity {
                 recreate();
             }
         });
-
-        //JSON json = new JSON(getActivity());
-        //JSONObject j = json.SQLtoJSON();
-        //System.out.println(j.toString());
         return root;
     }
 
