@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
@@ -31,33 +32,17 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <FrameLayout
+
+    <GridView
+        android:id="@+id/detailGridView"
         android:layout_width="match_parent"
-        android:layout_height="685dp"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:stretchMode="columnWidth"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topictext">
-
-        <ImageView
-            android:id="@+id/heart"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="right|top"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <GridView
-            android:id="@+id/detailGridView"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginTop="52dp"
-            android:gravity="center"
-            android:padding="2dp"
-            android:stretchMode="columnWidth">
-
-        </GridView>
-
-    </FrameLayout>
-
-    <!--android:numColumns="3"-->
+        app:layout_constraintTop_toBottomOf="@+id/topictext"></GridView>
 </androidx.constraintlayout.widget.ConstraintLayout>
