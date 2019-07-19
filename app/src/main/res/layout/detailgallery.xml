@@ -10,21 +10,36 @@
 
     <TextView
         android:id="@+id/topictext"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
+        android:layout_width="244dp"
+        android:layout_height="49dp"
         android:fontFamily="@font/dry"
+        android:gravity="center"
         android:textColor="@color/sky"
         android:textSize="35dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/widebtn"
+        android:layout_width="52dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/topictext"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <GridView
         android:id="@+id/detailGridView"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="52dp"
+        android:gravity="center"
+        android:padding="2dp"
+        android:stretchMode="columnWidth"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topictext" />
-
+    <!--android:numColumns="3"-->
 </androidx.constraintlayout.widget.ConstraintLayout>
