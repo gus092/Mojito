@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "695920892814",
+    "firebase_url": "https://mojito-3c84d.firebaseio.com",
+    "project_id": "mojito-3c84d",
+    "storage_bucket": "mojito-3c84d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695920892814:android:35eee6307ccfebc4",
+        "android_client_info": {
+          "package_name": "com.example.mojito"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695920892814-smf0tjs2nauel6pe3iavb9p5j16loch0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA04iB_P9MMkZhYLtltBoDD5c93lnajqaQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695920892814-smf0tjs2nauel6pe3iavb9p5j16loch0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

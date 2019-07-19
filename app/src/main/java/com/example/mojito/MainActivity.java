@@ -1,6 +1,4 @@
 package com.example.mojito;
-
-
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -14,6 +12,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.mojito.ui.main.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +22,15 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvData;
 
     String[] permission_list = {
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_CONTACTS,
-            Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.READ_PARTYS,
+//            Manifest.permission.CAMERA,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.INTERNET
 
     };
 
-//    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+//    private static final int MY_PERMISSIONS_REQUEST_READ_partyS = 100;
 //    private static final int PICK_FROM_GALLERY = 1;
 
 //    private List<String> Phone_number = new ArrayList<>();
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 //    @Override
 //    public void onRequestPermissionsResult(int requestCode, String[] permission, int[] grantResults) {
 //        switch(requestCode) {
-//            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+//            case MY_PERMISSIONS_REQUEST_READ_partyS: {
 //                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 //
 //                } else {
@@ -56,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-//        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED) {
-//            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_CONTACTS)) {
+//        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_partyS)!=PackageManager.PERMISSION_GRANTED) {
+//            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_partyS)) {
 //
 //            } else {
-//                ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.READ_CONTACTS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+//                ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.READ_partyS}, MY_PERMISSIONS_REQUEST_READ_partyS);
 //            }
 //        } else {
 //
@@ -72,15 +72,15 @@ public class MainActivity extends AppCompatActivity {
 //            } else {
 //                ActivityCompat.requestPermissions(MainActivity.this,
 //                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-//                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+//                        MY_PERMISSIONS_REQUEST_READ_partyS);
 ////                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 ////                startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
 //            }
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-
-        checkPermission();
+//
+//        checkPermission();
     }
     public void initialize(){
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
