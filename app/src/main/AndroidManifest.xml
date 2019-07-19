@@ -33,6 +33,7 @@
         </activity>
         <activity android:name=".uploadPhotoActivity"/>
         <activity android:name=".BaseActivity"/>
+        <activity android:name=".DetailGallery"/>
     </application>
 
 

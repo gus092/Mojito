@@ -6,10 +6,10 @@
 
     <!-- normal -->
     <font
-        android:font="@font/yes"
+        android:font="@font/sunbold"
         android:fontStyle="normal"
         android:fontWeight="400"
-        app:font="@font/yes"
+        app:font="@font/sunbold"
         app:fontStyle="normal"
         app:fontWeight="400" />
 </font-family>
