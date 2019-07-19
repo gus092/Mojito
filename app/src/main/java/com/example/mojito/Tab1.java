@@ -34,7 +34,7 @@ public class Tab1 extends Fragment {
         mainLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), BaseActivity.class);
+                Intent i = new Intent(getActivity(), MainActivity.class);
                 i.putExtra("main", "main");
                 startActivity(i);
             }
