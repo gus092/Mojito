@@ -286,7 +286,8 @@ public class uploadPhotoActivity extends Activity {
 
         try {
             List<Address> mResultList = geocoder.getFromLocation(lat, lng, 1);
-            nation = mResultList.get(0).getCountryName();
+           nation = mResultList.get(0).getCountryName();
+
 
         } catch (IOException e) {
             e.printStackTrace();

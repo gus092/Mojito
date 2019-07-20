@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,32 +95,32 @@ public class CustomGallery extends Activity {
         gridview.setAdapter(new ImageAdapter(this, osNameList, osImages));
         //gridview.setAdapter(new ImageAdapter(this));
         gridview.setNumColumns(3); //처음 girdview모드
-        final ImageView heart = (ImageView) findViewById(R.id.heart);
-       // heart.setImageResource(R.drawable.lime1);
+        final ImageView heart = (ImageView) findViewById(R.id.heart2);
+       //heart.setImageResource(R.drawable.lime1);
 
 
         final ImageButton widebtn = (ImageButton) findViewById(R.id.widebtn);
         widebtn.setImageResource(R.drawable.wider);
 
-//        widebtn.setOnClickListener(new Button.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (flag == 0) {//현재 gird에서 wideVer로!
-//                    Toast.makeText(getApplicationContext(), "Wide 버전으로 띄웁니다.", Toast.LENGTH_SHORT).show();
-//                    widebtn.setImageResource(R.drawable.menu);
-//                    gridview.setNumColumns(1);
-//                    gridview.setAdapter(new ImageAdapter2(getApplicationContext()));
-//                    flag = 1;
-//                } else {//현재 gird에서 wideVer로!
-//                    Toast.makeText(getApplicationContext(), "grid 버전으로 띄웁니다.", Toast.LENGTH_SHORT).show();
-//                    widebtn.setImageResource(R.drawable.wider);
-//                    gridview.setNumColumns(3);
-//                    gridview.setAdapter(new ImageAdapter(getApplicationContext()));
-//                    flag = 0;
-//                }
-//
-//            }
-//        });
+        widebtn.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (flag == 0) {//현재 gird에서 wideVer로!
+                    Toast.makeText(getApplicationContext(), "Wide 버전으로 띄웁니다.", Toast.LENGTH_SHORT).show();
+                    widebtn.setImageResource(R.drawable.menu);
+                    gridview.setNumColumns(1);
+                    gridview.setAdapter(new ImageAdapter2(CustomGallery.this, osNameList, osImages));
+                    flag = 1;
+                } else {//현재 gird에서 wideVer로!
+                    Toast.makeText(getApplicationContext(), "grid 버전으로 띄웁니다.", Toast.LENGTH_SHORT).show();
+                    widebtn.setImageResource(R.drawable.wider);
+                    gridview.setNumColumns(3);
+                    gridview.setAdapter(new ImageAdapter(CustomGallery.this, osNameList, osImages));
+                    flag = 0;
+                }
+
+            }
+        });
 
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -128,17 +129,17 @@ public class CustomGallery extends Activity {
             public void onItemClick(AdapterView<?> arg0, final View arg1,
                                     final int position, long arg3) {
 //                positionGlobal = position;
-                if (null != images && !images.isEmpty()) {
-                    if (heartFlag == 0) {
-                        Toast.makeText(CustomGallery.this, "'좋아요'", Toast.LENGTH_SHORT).show();
-                        heart.setImageResource(R.drawable.lime2);
-                        heartFlag = 1;
-                    } else {
-                        Toast.makeText(CustomGallery.this, "'좋아요 취소'", Toast.LENGTH_SHORT).show();
-                        heart.setImageResource(R.drawable.lime1);
-                        heartFlag = 0;
-                    }
-                }
+//                if (null != images && !images.isEmpty()) {
+//                    if (heartFlag == 0) {
+//                        Toast.makeText(CustomGallery.this, "'좋아요'", Toast.LENGTH_SHORT).show();
+//                        heart.setImageResource(R.drawable.lime2);
+//                        heartFlag = 1;
+//                    } else {
+//                        Toast.makeText(CustomGallery.this, "'좋아요 취소'", Toast.LENGTH_SHORT).show();
+//                        heart.setImageResource(R.drawable.lime1);
+//                        heartFlag = 0;
+//                    }
+//                }
             }
         });
     }
@@ -297,16 +298,229 @@ public class CustomGallery extends Activity {
             holder.os_btn = (ImageButton) rowView.findViewById(R.id.heart2);
             holder.os_img = (ImageView) rowView.findViewById(R.id.photo);
 
-            holder.os_btn.setImageResource(imageId);
-            holder.os_img.setImageBitmap(BitmapFactory.decodeFile(osNameList[position]));
+            //holder.os_btn.setImageResource(imageId);
+           // holder.os_img.setImageBitmap(BitmapFactory.decodeFile(osNameList[position]));
+            Glide.with(context).load(osNameList[position]).into(holder.os_img);
+            Glide.with(context).load(R.drawable.lime1).into( holder.os_btn);
 
-            rowView.setOnClickListener(new View.OnClickListener() {
+
+            holder.os_btn.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
-                    Toast.makeText(context, "You Clicked " + result[position], Toast.LENGTH_SHORT).show();
-                    holder.os_btn.setImageResource(R.drawable.lime2);
+
+                    if (heartFlag == 0) {
+                        Toast.makeText(CustomGallery.this, "'좋아요'", Toast.LENGTH_SHORT).show();
+                        Log.e("heart number is ...","now :"+heartFlag);
+                        Glide.with(context).load(R.drawable.lime2).into( holder.os_btn);
+                        //Glide.with(context).load(R.drawable.lime2).into( holder.os_btn);
+                        heartFlag = 1;
+                    } else{
+                        Log.e("heart number is ...","now111 :"+heartFlag);
+                        Toast.makeText(CustomGallery.this, "'좋아요 취소'", Toast.LENGTH_SHORT).show();
+                        Glide.with(context).load(R.drawable.lime1).into( holder.os_btn);
+                        heartFlag = 0;
+                    }
+                }
+            });
+
+            return rowView;
+        }
+
+
+        //modified
+
+
+        /**
+         * The Class ImageAdapter2.
+         */
+//        public static class ImageAdapter2 extends BaseAdapter {
+//
+//            /**
+//             * The context.
+//             */
+//            public static Context context;
+//
+//            /**
+//             * Instantiates a new image adapter.
+//             *
+//             * @param localContext the local context
+//             */
+//            public ImageAdapter2(Context localContext) {
+//                context = localContext;
+//                images = getAllShownImagesPath(context);
+//            }
+//
+//            public ImageAdapter2(Context localContext, int i) {
+//                context = localContext;
+//                images = getAllShownImagesPath(context);
+//            }
+//
+//
+//            public int getCount() {
+//                return images.size();
+//            }
+//
+//
+//            public String getImage(int position) {
+//                return images.get(position);
+//            }
+//
+//            public Object getItem(int position) {
+//                return position;
+//            }
+//
+//            public long getItemId(int position) {
+//                return position;
+//            }
+//
+//            public View getView(final int position, View convertView,
+//                                ViewGroup parent) {
+//                ImageView picturesView;
+//                if (convertView == null) {
+//                    picturesView = new ImageView(context);
+//                    picturesView.setScaleType(ImageView.ScaleType.CENTER);
+//                    picturesView
+//                            .setLayoutParams(new GridView.LayoutParams(1100, 1100));
+//
+//                } else {
+//                    picturesView = (ImageView) convertView;
+//                }
+//
+//                Glide.with(context).load(images.get(position))
+//                        //.placeholder(R.drawable.ic_launcher).centerCrop()
+//                        .into(picturesView);
+//
+//                return picturesView;
+//            }
+//
+//            /**
+//             * Getting All Images Path.
+//             *
+//             * @param activity the activity
+//             * @return ArrayList with images Path
+//             */
+//            private ArrayList<String> getAllShownImagesPath(Context activity) { //imagepath를 불러오기!
+//                Uri uri;
+//                Cursor cursor;
+//                int data, album;
+//                int check = 0;
+//
+//
+//                int column_index_data, column_index_folder_name;
+//                ArrayList<String> listOfAllImages = new ArrayList<String>();
+//                String absolutePathOfImage = null;
+//                uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+//
+//                String[] projection = {MediaStore.MediaColumns.DATA,
+//                        MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
+//
+//                cursor = activity.getContentResolver().query(uri, projection, null, null, null);
+//
+//                column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+//                column_index_folder_name = cursor
+//                        .getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
+//                while (cursor.moveToNext()) {
+//
+//                    absolutePathOfImage = cursor.getString(column_index_data);
+//                    listOfAllImages.add(absolutePathOfImage);
+//
+//                }
+//                return listOfAllImages;
+//            }
+//        }
+    }
+
+
+    public class ImageAdapter2 extends BaseAdapter {
+
+        String[] result;
+        Context context;
+        int imageId;
+
+        //        private static LayoutInflater inflater=null;
+        public ImageAdapter2(CustomGallery mainActivity, String[] osNameList, int osImages) {
+            // TODO Auto-generated constructor stub
+            result = osNameList;
+            context = mainActivity;
+            imageId = osImages;
+            inflater = (LayoutInflater) context.
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        }
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return result.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            // TODO Auto-generated method stub
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return position;
+        }
+
+        public class Holder {
+            ImageButton os_btn;
+            ImageView os_img;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            // TODO Auto-generated method stub
+            final Holder holder = new Holder();
+            View rowView;
+
+            rowView = inflater.inflate(R.layout.customgrid2, null);
+            holder.os_btn = (ImageButton) rowView.findViewById(R.id.heart2);
+            holder.os_img = (ImageView) rowView.findViewById(R.id.photo);
+
+//            holder.os_btn.setImageResource(R.drawable.lime1);
+//            holder.os_img.setImageBitmap(BitmapFactory.decodeFile(osNameList[position]));
+            Glide.with(context).load(osNameList[position]).into(holder.os_img);
+           // Glide.with(context).load(R.drawable.lime1).into( holder.os_btn);
+            if (heartFlag == 0) {
+                Glide.with(context).load(R.drawable.lime1).into( holder.os_btn);
+            } else{
+                Glide.with(context).load(R.drawable.lime2).into( holder.os_btn);
+            }
+
+
+
+
+
+
+            holder.os_btn.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+//                    Toast.makeText(context, "You Clicked " + result[position], Toast.LENGTH_SHORT).show();
+//                    holder.os_btn.setImageResource(R.drawable.lime2);
+
+                    if (heartFlag == 0) {
+                        Toast.makeText(CustomGallery.this, "'좋아요'", Toast.LENGTH_SHORT).show();
+                        Log.e("heart number is ...","now :"+heartFlag);
+                        Glide.with(context).load(R.drawable.lime2).into( holder.os_btn);
+                        //Glide.with(context).load(R.drawable.lime2).into( holder.os_btn);
+                        heartFlag = 1;
+                    } else{
+                        Log.e("heart number is ...","now111 :"+heartFlag);
+                        Toast.makeText(CustomGallery.this, "'좋아요 취소'", Toast.LENGTH_SHORT).show();
+                        Glide.with(context).load(R.drawable.lime1).into( holder.os_btn);
+                        heartFlag = 0;
+                    }
+
+
+
                 }
             });
 
@@ -417,3 +631,4 @@ public class CustomGallery extends Activity {
 //        }
     }
 }
+
