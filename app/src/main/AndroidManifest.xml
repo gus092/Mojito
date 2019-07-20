@@ -35,7 +35,6 @@
         <activity android:name=".Party.PartyActivity"/>
         <activity android:name=".BaseActivity"/>
         <activity android:name=".CustomGallery"/>
+        <activity android:name=".Party.MakeParty"/>
     </application>
-
-
 </manifest>

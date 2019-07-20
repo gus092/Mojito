@@ -39,19 +39,14 @@ public class PartyActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.partyactivity, container, false);
-//        partyDBAdapter db = new partyDBAdapter(getActivity());
-        recyclerView = root.findViewById(R.id.party_recycler);
+        setContentView(R.layout.partyactivity);
+        recyclerView = findViewById(R.id.party_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         loadpartyTask = new Loadpartys();
         loadpartyTask.execute();
 
         // ADD party Button
-        Button make_party = root.findViewById(R.id.make_party);
+        Button make_party = findViewById(R.id.make_party);
         make_party.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -61,7 +56,7 @@ public class PartyActivity extends AppCompatActivity {
         });
 
         // SYNCHRONIZATION PARTY Button
-        FloatingActionButton sync_party = root.findViewById(R.id.sync_Button); //TODO root로 쓰는게 맞나?
+        FloatingActionButton sync_party = findViewById(R.id.sync_Button); //TODO root로 쓰는게 맞나?
         sync_party.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -69,8 +64,38 @@ public class PartyActivity extends AppCompatActivity {
                 recreate();
             }
         });
-        return root;
     }
+//
+//    public View onCreateView(
+//            @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        View root = inflater.inflate(R.layout.partyactivity, container, false);
+////        partyDBAdapter db = new partyDBAdapter(getActivity());
+//        recyclerView = root.findViewById(R.id.party_recycler);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        loadpartyTask = new Loadpartys();
+//        loadpartyTask.execute();
+//
+//        // ADD party Button
+//        Button make_party = root.findViewById(R.id.make_party);
+//        make_party.setOnClickListener(new Button.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                Intent intent = new Intent(PartyActivity.this, MakeParty.class) ;
+//                startActivityForResult(intent, REQ_MAKE_PARTY);
+//            }
+//        });
+//
+//        // SYNCHRONIZATION PARTY Button
+//        FloatingActionButton sync_party = root.findViewById(R.id.sync_Button); //TODO root로 쓰는게 맞나?
+//        sync_party.setOnClickListener(new Button.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+////                getpartyList();
+//                recreate();
+//            }
+//        });
+//        return root;
+//    }
 
     // Run loadpartys in Background Thread
     class Loadpartys extends AsyncTask<String, Void, String> {

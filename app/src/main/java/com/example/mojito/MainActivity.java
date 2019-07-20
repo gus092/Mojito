@@ -46,7 +46,6 @@ public class MainActivity extends Activity{
                 Intent intent_party = new Intent(getBaseContext(), PartyActivity.class);
                 startActivity(intent_party);
             }
-
         });
 
     }
