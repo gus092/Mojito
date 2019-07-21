@@ -11,8 +11,8 @@
 
     <TextView
         android:id="@+id/topictext"
-        android:layout_width="290dp"
-        android:layout_height="47dp"
+        android:layout_width="197dp"
+        android:layout_height="48dp"
         android:fontFamily="@font/dry"
         android:gravity="center"
         android:textColor="@color/sky"
@@ -22,17 +22,29 @@
 
     <ImageButton
         android:id="@+id/widebtn"
-        android:layout_width="52dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/topictext"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="2dp"
         android:background="@null"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
+
+    <ImageButton
+        android:id="@+id/uploadbtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="3dp"
+        android:background="@null"
+        app:layout_constraintEnd_toStartOf="@+id/widebtn"
+        app:layout_constraintHorizontal_bias="0.136"
+        app:layout_constraintStart_toEndOf="@+id/topictext"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <GridView
         android:id="@+id/detailGridView"

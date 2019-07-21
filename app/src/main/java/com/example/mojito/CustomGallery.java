@@ -26,8 +26,14 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.mojito.R.drawable.ic_launcher_background;
 
@@ -38,13 +44,18 @@ public class CustomGallery extends Activity {
     int heartFlag = 0;//누르기전0, 누르면1
 
 
-    //modified22
+
     private static LayoutInflater inflater = null;
-    String[] result;
-    Context context;
+
     public static String[] osNameList;
     public static int osImages;
 
+    String CountryNum;
+    String photoUrl;
+    String liked;
+//    String[] result;
+//    Context context;
+    private DatabaseReference mDataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,13 +104,26 @@ public class CustomGallery extends Activity {
         osNameList = getAllShownImagesPath(getBaseContext()).toArray(new String[0]);
         osImages=R.drawable.lime1;
         gridview.setAdapter(new ImageAdapter(this, osNameList, osImages));
-        //gridview.setAdapter(new ImageAdapter(this));
         gridview.setNumColumns(3); //처음 girdview모드
         final ImageView heart = (ImageView) findViewById(R.id.heart2);
-       //heart.setImageResource(R.drawable.lime1);
+
+        ImageButton uploadbtn = (ImageButton)findViewById(R.id.uploadbtn);
+        uploadbtn.setImageResource(R.drawable.upload);
+        uploadbtn.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) { //upload버튼을 눌렀을때
+                //Intent intent2 = new Intent(view.getContext(), uploadPhotoActivity.class);
+                Intent intent2 = new Intent(view.getContext(), FirebaseGallery.class);
+                intent2.putExtra("upload","upload");
+                view.getContext().startActivity(intent2);
+                postFirebaseDatabase(true);
+            }
+            });
+
 
 
         final ImageButton widebtn = (ImageButton) findViewById(R.id.widebtn);
+
         widebtn.setImageResource(R.drawable.wider);
 
         widebtn.setOnClickListener(new Button.OnClickListener() {
@@ -118,7 +142,6 @@ public class CustomGallery extends Activity {
                     gridview.setAdapter(new ImageAdapter(CustomGallery.this, osNameList, osImages));
                     flag = 0;
                 }
-
             }
         });
 
@@ -629,6 +652,43 @@ public class CustomGallery extends Activity {
 //                return listOfAllImages;
 //            }
 //        }
+    }
+
+    public class FirebasePost {
+        public String CountryNum;
+        public String photoUrl;
+        public String liked;
+
+        public FirebasePost() {
+            // Default constructor required for calls to DataSnapshot.getValue(FirebasePost.class)
+        }
+        public FirebasePost(String CountryNum, String photoUrl, String liked) {
+            this.CountryNum = CountryNum;
+            this.photoUrl = photoUrl;
+            this.liked = liked;
+        }
+
+
+        @Exclude
+        public Map<String, Object> toMap() {
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("CountryNum", CountryNum);
+            result.put("photoUrl",photoUrl);
+            result.put("liked", liked);
+            return result;
+        }
+    }
+    //add==True면 데이터 저장, 이미 있으면 업데이트, add==False면 데이터 삭제
+    public void postFirebaseDatabase(boolean add){
+        mDataBase = FirebaseDatabase.getInstance().getReference();
+        Map<String, Object> childUpdates = new HashMap<>();
+        Map<String, Object> postValues = null;
+        if (add) {
+            FirebasePost post = new FirebasePost(CountryNum,photoUrl,liked);
+            postValues = post.toMap();
+        }
+        childUpdates.put("/Gallery/", postValues);
+        mDataBase.updateChildren(childUpdates);
     }
 }
 
