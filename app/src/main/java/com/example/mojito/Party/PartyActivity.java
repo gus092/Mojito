@@ -30,7 +30,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class PartyActivity extends AppCompatActivity {
-    static final int REQ_MAKE_PARTY =5921;
+    static final int REQ_MAKE_PARTY = 5921;
     ArrayList<PartyItem> party_items = new ArrayList<PartyItem>();
     RecyclerView recyclerView;
     PartyAdapter adapter;
