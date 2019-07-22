@@ -1,4 +1,7 @@
 package com.example.mojito;
+
+import android.util.Log;
+
 public class Upload {
     private String mName;
     private String mImageUrl;
@@ -25,8 +28,7 @@ public class Upload {
     }
 
     public String getImageUrl() {
-        return mImageUrl;
-    }
+        System.out.println("+=================================================="+mImageUrl); return mImageUrl; }
 
     public void setImageUrl(String imageUrl) {
         mImageUrl = imageUrl;

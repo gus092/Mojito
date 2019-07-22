@@ -1,7 +1,9 @@
 package com.example.mojito;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Bundle;
@@ -49,10 +51,14 @@ public class FirebaseGallery extends AppCompatActivity {
 
     private Uri mImageUri;
 
-    public static StorageReference mStorageRef;
+    public StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
 
     private StorageTask mUploadTask;
+
+
+    public Uri downloadUrl;
+    public String convertingurl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +118,8 @@ public class FirebaseGallery extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
+            Log.e("AAAAAAAAA  AAAAAA",""+mImageUri);
+            Log.e("BBBBBBBBBBBBBBB ",""+ getRealPathFromUri(getApplicationContext(),mImageUri));
 
             Glide.with(this).load(mImageUri).into(mImageView);
         }
@@ -121,6 +129,20 @@ public class FirebaseGallery extends AppCompatActivity {
         ContentResolver cR = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+    public static String getRealPathFromUri(Context context, Uri contentUri) { //사진 절대경로찾아줌
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
 
     private void uploadFile() {
@@ -142,22 +164,35 @@ public class FirebaseGallery extends AppCompatActivity {
                                 }
                             }, 500);
                             //added
-                            fileReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                                String instead;
+
+//                            fileReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+//                                String instead;
+//                                @Override
+//                                public void onComplete(@NonNull Task<Uri> task) {
+//                                    String profileImageUrl = task.getResult().toString();
+//                                    instead = task.getResult().toString();
+//                                    Log.e("URL",profileImageUrl);
+//                                }
+//                            });
+
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
-                                public void onComplete(@NonNull Task<Uri> task) {
-                                    String profileImageUrl = task.getResult().toString();
-                                    instead = task.getResult().toString();
-                                    Log.i("URL",profileImageUrl);
+                                public void onSuccess(Uri uri) {
+                                    convertingurl=  uri.toString();
+                                    Uri downloadUrl = uri;
+                                    Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),downloadUrl.toString());
+                                    String uploadId = mDatabaseRef.push().getKey();
+                                    mDatabaseRef.child(uploadId).setValue(upload);
+                                    Toast.makeText(getBaseContext(), "Upload success! URL - " + downloadUrl.toString() , Toast.LENGTH_SHORT).show();
                                 }
                             });
                             //added
-                            Toast.makeText(FirebaseGallery.this, "Upload successful", Toast.LENGTH_LONG).show();
-                            Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
-                                 taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
 
-                            String uploadId = mDatabaseRef.push().getKey();
-                            mDatabaseRef.child(uploadId).setValue(upload);
+                            Toast.makeText(FirebaseGallery.this, "Upload successful", Toast.LENGTH_LONG).show();
+                            Log.e("fileReference"," is "+fileReference);
+                            Log.e("convertingurl"," is "+convertingurl);
+
+                           Log.e("fileReference222","is"+fileReference.getDownloadUrl());
 
                         }
                     })

@@ -327,6 +327,8 @@ public class CustomGallery extends Activity {
             Glide.with(context).load(R.drawable.lime1).into( holder.os_btn);
 
 
+
+
             holder.os_btn.setOnClickListener(new View.OnClickListener() {
 
                 @Override
