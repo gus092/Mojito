@@ -10,10 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -34,16 +39,27 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     }
 
     @Override
-    public void onBindViewHolder(ImageViewHolder holder, int position) {
+    public void onBindViewHolder(final ImageViewHolder holder, int position) {
         Upload uploadCurrent = mUploads.get(position);
         holder.textViewName.setText(uploadCurrent.getName());
+
+//        fileReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Uri> task) {
+//                String profileImageUrl=task.getResult().toString();
+//                Log.i("URL",profileImageUrl);
+//            }
+//        });
+
         Log.e("현재 이미지는..","Now.."+uploadCurrent.getImageUrl());
-        Glide.with(mContext)
-                .load("com.google.android.gms.tasks.zzu@4847245")
-                //.placeholder(R.drawable.lime2)
-                //.fit()
-                //.centerCrop()
-                .into(holder.imageView);
+//        Glide.with(mContext)
+//                .load(uploadCurrent.getImageUrl())
+//                //.placeholder(R.drawable.lime2)
+////                .fit()
+////                .centerCrop()
+//                .into(holder.imageView);
+
+        Picasso.get().load(uploadCurrent.getImageUrl()).error(R.drawable.lime2).into(holder.imageView);
     }
 
     @Override
