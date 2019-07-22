@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.image_item, parent, false);
+
+        ImageButton limeBtn = (ImageButton)v.findViewById(R.id.lime_btn);
+        limeBtn.setImageResource(R.drawable.lime2);
+        System.out.println("CLLLLLLLLICKKKKKKKKKKKKKKKKKKK");
         return new ImageViewHolder(v);
     }
 
@@ -48,7 +53,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         Upload uploadCurrent = mUploads.get(position);
         holder.textViewName.setText(uploadCurrent.getName());
 
-        Log.e("현재 이미지는..","Now.."+uploadCurrent.getImageUrl());
+
+       // Log.e("현재 이미지는..","Now.."+uploadCurrent.getImageUrl());
 
         Glide.with(mContext)
                 .load(uploadCurrent.getImageUrl())
@@ -74,6 +80,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
             textViewName = itemView.findViewById(R.id.text_view_name);
             imageView = itemView.findViewById(R.id.image_view_upload);
+
         }
     }
 }

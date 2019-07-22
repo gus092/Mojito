@@ -27,8 +27,7 @@ public class Upload {
         mName = name;
     }
 
-    public String getImageUrl() {
-        System.out.println("+=================================================="+mImageUrl); return mImageUrl; }
+    public String getImageUrl() { return mImageUrl; }
 
     public void setImageUrl(String imageUrl) {
         mImageUrl = imageUrl;

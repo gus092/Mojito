@@ -52,10 +52,10 @@ public class ImagesActivity extends AppCompatActivity {
                 int count=0;
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Upload upload = postSnapshot.getValue(Upload.class);
-                    Log.e("upload에 들어가는것...","::::: "+ upload);
+                    //Log.e("upload에 들어가는것...","::::: "+ upload);
                     mUploads.add(upload);
                     count++;
-                    Log.e("count","the number of count.."+count);
+                    //Log.e("count","the number of count.."+count);
                 }
 
                 mAdapter = new ImageAdapter(ImagesActivity.this, mUploads);

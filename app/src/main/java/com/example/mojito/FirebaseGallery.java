@@ -118,8 +118,6 @@ public class FirebaseGallery extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
-            Log.e("AAAAAAAAA  AAAAAA",""+mImageUri);
-            Log.e("BBBBBBBBBBBBBBB ",""+ getRealPathFromUri(getApplicationContext(),mImageUri));
 
             Glide.with(this).load(mImageUri).into(mImageView);
         }
