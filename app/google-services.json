@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "695920892814-mfbts41ie7nchpsrjoqgbcn9aijv7lco.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mojito",
+            "certificate_hash": "8182b22466b4162bb1982e6123aa301d44caaa48"
+          }
+        },
+        {
           "client_id": "695920892814-smf0tjs2nauel6pe3iavb9p5j16loch0.apps.googleusercontent.com",
           "client_type": 3
         }
