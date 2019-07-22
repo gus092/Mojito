@@ -1,18 +1,28 @@
 package com.example.mojito.Party;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mojito.Authentication.LoginActivity;
+import com.example.mojito.MainActivity;
 import com.example.mojito.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class MakeParty extends AppCompatActivity{
@@ -23,7 +33,6 @@ public class MakeParty extends AppCompatActivity{
     String attribute;
     String description;
     String photo;
-    public ImageButton openMap;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +46,38 @@ public class MakeParty extends AppCompatActivity{
                 startActivityForResult(intent,REQ_OPEN_MAP);
             }
         });
+//        ImageButton save_party = findViewById(R.id.btn_Save);
+//        save_party.setOnClickListener(new ImageButton.OnClickListener(){
+//            @
+//        });
+        
+
+//        TextView write_description = findViewById(R.id.description);
+//        write_description.setOnClickListener(new TextView.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (REQ_OPEN_MAP) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    TextView show_destinations = findViewById(R.id.destinations);
+                    String temp_destination = new String();
+                    ArrayList<String> destinations = data.getStringArrayListExtra("destinations");
+                        for(int i=0; i<destinations.size(); i++){
+                            temp_destination += destinations.get(i)+"\n";
+                    }
+                    show_destinations.setText(temp_destination);
+                }
+                break;
+            }
+        }
     }
 
         @IgnoreExtraProperties

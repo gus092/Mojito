@@ -10,9 +10,9 @@
         android:id="@+id/icon"
         style="@style/ThemeOverlay.FirebaseIcon"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="-350sp"
+        android:layout_marginTop="-200sp"
         android:src="@drawable/mojito" />
 
     <com.facebook.login.widget.LoginButton
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/icon"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-250sp"
+        android:layout_marginTop="-200sp"
         android:text="Sign in with Email"
         android:textAllCaps="false" />
 
