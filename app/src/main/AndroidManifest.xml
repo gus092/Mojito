@@ -49,7 +49,6 @@
         <activity android:name=".Party.OpenMap"/>
         <activity android:name=".uploadPhotoActivity"/>
         <activity android:name=".Party.PartyActivity"/>
-        <activity android:name=".BaseActivity"/>
         <activity android:name=".CustomGallery"/>
         <activity android:name=".Party.MakeParty"/>
         <activity android:name=".Authentication.EmailPasswordActivity"/>
