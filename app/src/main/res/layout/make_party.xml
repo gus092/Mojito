@@ -17,7 +17,7 @@
         android:text="What is Your Taste?"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/destinations" />
 
     <TextView
         android:id="@+id/textView6"
@@ -28,7 +28,7 @@
         android:text="And More...?"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipgroup" />
+        app:layout_constraintTop_toBottomOf="@+id/chipgroup6" />
 
     <TextView
         android:id="@+id/textView"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipgroup"
+        android:id="@+id/chipgroup1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -53,38 +53,205 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip4"
+            android:id="@+id/chip1-1"
+            android:text="즉흥적으로~"
+            style = "@style/Widget.MaterialComponents.Chip.Filter"
+            app:chipBackgroundColor="@color/mojito"
+            android:checkable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.MaterialComponents.Light"/>
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:theme="@style/Theme.MaterialComponents.Light"/>
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:theme="@style/Theme.MaterialComponents.Light"/>
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip"
+            android:id="@+id/chip1-2"
+            android:text="철저한 계획!"
+            style = "@style/Widget.MaterialComponents.Chip.Filter"
+            app:chipBackgroundColor="@color/mojito"
+            android:checkable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.MaterialComponents.Light"/>
     </com.google.android.material.chip.ChipGroup>
 
-    <TextView
-        android:id="@+id/textView7"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipgroup2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chipgroup1">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip2-1"
+            android:text="호텔"
+            style = "@style/Widget.MaterialComponents.Chip.Filter"
+            app:chipBackgroundColor="@color/mojito"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.MaterialComponents.Light"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip2-2"
+            android:text="호스텔/게스트 하우스"
+            style = "@style/Widget.MaterialComponents.Chip.Filter"
+            app:chipBackgroundColor="@color/mojito"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.MaterialComponents.Light"/>
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipgroup3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chipgroup2">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip3-1"
+            android:text="대중교통"
+            style = "@style/Widget.MaterialComponents.Chip.Filter"
+            app:chipBackgroundColor="@color/mojito"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.MaterialComponents.Light"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip3-2"
+            android:text="뚜벅뚜벅"
+            style = "@style/Widget.MaterialComponents.Chip.Filter"
+            app:chipBackgroundColor="@color/mojito"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.MaterialComponents.Light"/>
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipgroup4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chipgroup3">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip4-1"
+            android:text="식사는 찾아보고!"
+            style = "@style/Widget.MaterialComponents.Chip.Filter"
+            app:chipBackgroundColor="@color/mojito"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.MaterialComponents.Light"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip4-2"
+            android:text="끌리는곳이 맛집"
+            style = "@style/Widget.MaterialComponents.Chip.Filter"
+            app:chipBackgroundColor="@color/mojito"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.MaterialComponents.Light"/>
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipgroup5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chipgroup4">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip5-1"
+            android:text="빨리빨리"
+            style = "@style/Widget.MaterialComponents.Chip.Filter"
+            app:chipBackgroundColor="@color/mojito"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.MaterialComponents.Light"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip5-2"
+            android:text="느긋하게"
+            style = "@style/Widget.MaterialComponents.Chip.Filter"
+            app:chipBackgroundColor="@color/mojito"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.MaterialComponents.Light"/>
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipgroup6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chipgroup5">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip6-1"
+            android:text="자연"
+            style = "@style/Widget.MaterialComponents.Chip.Filter"
+            app:chipBackgroundColor="@color/mojito"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.MaterialComponents.Light"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip6-2"
+            android:text="도시"
+            style = "@style/Widget.MaterialComponents.Chip.Filter"
+            app:chipBackgroundColor="@color/mojito"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.MaterialComponents.Light"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip6-3"
+            android:text="휴양지"
+            style = "@style/Widget.MaterialComponents.Chip.Filter"
+            app:chipBackgroundColor="@color/mojito"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.MaterialComponents.Light"/>
+    </com.google.android.material.chip.ChipGroup>
+
+
+    <EditText
+        android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="24sp"
+        android:hint="Tell us"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -100,14 +267,31 @@
         app:srcCompat="@drawable/earth" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/destinations"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageButton
+        android:id="@+id/btn_Save"
+        android:layout_width="70sp"
+        android:layout_height="70sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16sp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/mojito_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,13 @@
 package com.example.mojito.Party;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
@@ -22,14 +25,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class OpenMap extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
-    String nation;
-    String area;
-//    public ArrayList<Pair<String,String>> Destinations;
-
+    public String nation;
+    public String area;
+    ArrayList<String> destinations = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +42,16 @@ public class OpenMap extends FragmentActivity implements OnMapReadyCallback {
         MapFragment mapFragment = (MapFragment)fragmentManager
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        ImageButton btn_Save = findViewById(R.id.btn_Save);
+        btn_Save.setOnClickListener(new ImageButton.OnClickListener(){
+          @Override
+          public void onClick(View view){
+              Intent intent_save = new Intent();
+              intent_save.putExtra("destinations", destinations);
+              setResult(RESULT_OK,intent_save);
+              finish();
+          }
+        });
     }
     @Override
     public void onMapReady(final GoogleMap googleMap) {
@@ -60,8 +73,8 @@ public class OpenMap extends FragmentActivity implements OnMapReadyCallback {
                 mOptions.position(new LatLng(latitude, longitude));
                 // 마커(핀) 추가
                 googleMap.addMarker(mOptions);
-//                Destinations.add( new Pair(area,nation) );
-//                setResult(RESULT_OK,Destinations);
+                String destination = area + ", " + nation;
+                destinations.add(destination);
             }
         });
         // Add a marker in KAIST
@@ -93,4 +106,6 @@ public class OpenMap extends FragmentActivity implements OnMapReadyCallback {
 //        Log.e("area is ....", area);
         return area;
     }
+
+
 }
