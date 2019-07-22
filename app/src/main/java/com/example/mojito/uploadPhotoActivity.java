@@ -22,7 +22,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -53,6 +58,7 @@ public class uploadPhotoActivity extends Activity {
     private static final int PICK_FROM_ALBUM = 1;
     private File tempFile;
 
+
     Uri photoUri;
 
 
@@ -60,6 +66,8 @@ public class uploadPhotoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.uploadphotoactivity);
+
+
 
         Intent i = getIntent();
         String welcomupload = i.getStringExtra("upload");
@@ -113,13 +121,13 @@ public class uploadPhotoActivity extends Activity {
         } //사진을 찍지 않고 돌아왔을때의 error처리
 
         if (requestCode == PICK_FROM_ALBUM) {
+           // StorageReference storageRef = storage.getReference();
 
             photoUri = data.getData();
 
             Cursor cursor = null;
 
             try {
-
                 /*
                  *  Uri 스키마를
                  *  content:/// 에서 file:/// 로  변경한다.
@@ -144,6 +152,7 @@ public class uploadPhotoActivity extends Activity {
                 }
             }
         } //사진을 앨범에서 가져와서 bitmap으로 가져오는 과정
+
         Knownation(tempFile);
     } //앨범으로 가서 tempFile에 선택한 사진 담아오기
 
@@ -309,14 +318,6 @@ public class uploadPhotoActivity extends Activity {
                                     ,{"중국", "대만"}
                                     ,{"러시아","괌","몽골","호주"} };
 
-//        String[] Korea = {"대한민국"};
-//        String[] ChinaTiwan= {"중국", "대만"};
-//        String[] Japan = {"일본"};
-//        String[] SouthEastAsiaIndia= {"라오스", "베트남", "말레이시아", "태국", "인도네시아", "필리핀", "싱가포르", "캄보디아", "동티모르", "브루나이","몰디브","인도"};
-//        String[] UsaCanada = {"미국","캐나다"};
-//        String[] Europe = {"독일", "프랑스", "이탈리아", "영국", "스페인", "그리스", "스위스", "네덜란드", "폴란드", "크로아디아", "오스트리아", "스웨덴", "우크라이나", "벨기에", "헝가리", "체코"};
-//        String [] MiddleAsiaAfrica = {"이집트","수단","리비아","알제리","튀니지","모로코","이란","요르단"};
-//        String [] Else= {"러시아","괌","몽골","호주"};
         for(int i=0;i<8;i++){
             for(int k=0;k<countryName[i].length;k++){
                 if(nation.equals(countryName[i][k]))
