@@ -36,6 +36,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public ImageAdapter(Context context, List<Upload> uploads) {
         mContext = context;
         mUploads = uploads;
+        for(int i=0;i<mUploads.size();i++){
+            System.out.println("++++++++++++++++++++++++++++++++++"+ mUploads.get(i));
+        }
     }
 
     @Override

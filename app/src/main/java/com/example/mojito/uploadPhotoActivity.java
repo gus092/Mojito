@@ -48,10 +48,10 @@ public class uploadPhotoActivity extends Activity {
     private boolean valid = false;
 
 
-    public String LATITUDE;
-    public String LATITUDE_REF;
-    public String LONGITUDE;
-    public String LONGITUDE_REF;
+    private String LATITUDE;
+    private  String LATITUDE_REF;
+    private  String LONGITUDE;
+    private  String LONGITUDE_REF;
     Float Latitude, Longitude;
 
 

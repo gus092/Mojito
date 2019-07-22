@@ -4,6 +4,11 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Bundle;
@@ -37,6 +42,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 
 public class FirebaseGallery extends AppCompatActivity {
 
@@ -59,6 +68,22 @@ public class FirebaseGallery extends AppCompatActivity {
 
     public Uri downloadUrl;
     public String convertingurl;
+    private File tempFile;
+
+
+    //countryname variable
+    String nation;//사진을 찍은 나라
+
+    private boolean valid = false;
+
+
+    private String LATITUDE;
+    private String LATITUDE_REF;
+    private String LONGITUDE;
+    private String LONGITUDE_REF;
+    Float Latitude, Longitude;
+    private int uploadPhtocountryName; //upload하는 사진의 국가
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,9 +144,206 @@ public class FirebaseGallery extends AppCompatActivity {
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
 
+            //find countryName
+
+
+            Cursor cursor = null;
+
+            try {
+                /*
+                 *  Uri 스키마를
+                 *  content:/// 에서 file:/// 로  변경한다.
+                 */
+                String[] proj = {MediaStore.Images.Media.DATA};
+
+                assert  mImageUri != null;
+                cursor = getContentResolver().query( mImageUri, proj, null, null, null);
+
+                assert cursor != null;
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+                cursor.moveToFirst();
+
+                tempFile = new File(cursor.getString(column_index));
+//                BitmapFactory.Options options = new BitmapFactory.Options();
+//                Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options); // originalBm은 가져온 사진의 bitmap저장됨
+
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+            Knownation(tempFile);
+            //find countryName
             Glide.with(this).load(mImageUri).into(mImageView);
         }
     }
+    //countryName added2
+    private void Knownation(File tempFile) {
+//        Uri filename = photoUri;
+        String stringtemp = tempFile.toString();
+        try {
+            ExifInterface exif = new ExifInterface(stringtemp);
+            showExif(exif);
+            findAddress(Latitude, Longitude);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error!", Toast.LENGTH_LONG).show();
+        }
+
+    } //temFile가지고 showExif에 넘겨주기
+
+    private void showExif(ExifInterface exif) {
+        //latitude = getTagString(ExifInterface.TAG_GPS_LATITUDE, exif);
+
+
+        //longitude = getTagString(ExifInterface.TAG_GPS_LONGITUDE, exif);
+
+//        String myAttribute = "[Exif information] \n\n";
+//
+//        myAttribute += getTagString(ExifInterface.TAG_DATETIME, exif);
+//        myAttribute += getTagString(ExifInterface.TAG_FLASH, exif);
+//        myAttribute += getTagString(ExifInterface.TAG_GPS_LATITUDE,
+//                exif);
+//        myAttribute += getTagString(
+//                ExifInterface.TAG_GPS_LATITUDE_REF, exif);
+//        myAttribute += getTagString(ExifInterface.TAG_GPS_LONGITUDE,
+//                exif);
+//        myAttribute += getTagString(
+//                ExifInterface.TAG_GPS_LONGITUDE_REF, exif);
+//        myAttribute += getTagString(ExifInterface.TAG_IMAGE_LENGTH,
+//                exif);
+//        myAttribute += getTagString(ExifInterface.TAG_IMAGE_WIDTH,
+//                exif);
+//        myAttribute += getTagString(ExifInterface.TAG_MAKE, exif);
+//        myAttribute += getTagString(ExifInterface.TAG_MODEL, exif);
+//        myAttribute += getTagString(ExifInterface.TAG_ORIENTATION,
+//                exif);
+//        myAttribute += getTagString(ExifInterface.TAG_WHITE_BALANCE,
+//                exif);
+//
+
+//        lat = Double.parseDouble(latitude);
+//        lng = Double.parseDouble(longitude);
+
+        //modified
+        LATITUDE = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
+        LATITUDE_REF = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF);
+        LONGITUDE = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
+        LONGITUDE_REF = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF);
+        // your Final lat Long Values
+
+        if ((LATITUDE != null)
+                && (LATITUDE_REF != null)
+                && (LONGITUDE != null)
+                && (LONGITUDE_REF != null)) {
+
+            if (LATITUDE_REF.equals("N")) {
+                Latitude = convertToDegree(LATITUDE);
+            } else {
+                Latitude = 0 - convertToDegree(LATITUDE);
+            }
+
+            if (LONGITUDE_REF.equals("E")) {
+                Longitude = convertToDegree(LONGITUDE);
+            } else {
+                Longitude = 0 - convertToDegree(LONGITUDE);
+            }
+
+        }
+
+
+        //modified
+
+
+        Log.e("Image Information : ", Latitude + " , " + Longitude);
+    } //사진의 위도 경도 알아내기
+
+
+    //modified22
+    private Float convertToDegree(String stringDMS) {
+        Float result = null;
+        String[] DMS = stringDMS.split(",", 3);
+
+        String[] stringD = DMS[0].split("/", 2);
+        Double D0 = new Double(stringD[0]);
+        Double D1 = new Double(stringD[1]);
+        Double FloatD = D0 / D1;
+
+        String[] stringM = DMS[1].split("/", 2);
+        Double M0 = new Double(stringM[0]);
+        Double M1 = new Double(stringM[1]);
+        Double FloatM = M0 / M1;
+
+        String[] stringS = DMS[2].split("/", 2);
+        Double S0 = new Double(stringS[0]);
+        Double S1 = new Double(stringS[1]);
+        Double FloatS = S0 / S1;
+
+        result = new Float(FloatD + (FloatM / 60) + (FloatS / 3600));
+
+        return result;
+
+
+    }
+
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return (String.valueOf(Latitude)
+                + ", "
+                + String.valueOf(Longitude));
+    }
+
+    private String findAddress(double lat, double lng) {
+        //StringBuffer bf = new StringBuffer();
+        Geocoder geocoder = new Geocoder(this);
+
+        try {
+            List<Address> mResultList = geocoder.getFromLocation(lat, lng, 1);
+            nation = mResultList.get(0).getCountryName();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.e("nation is ....", nation);
+        countryIndex(nation);
+
+
+        return nation;
+    } //위도 경도를 받아서 나라 반환해주기
+
+    private int countryIndex(String nation) { //분류 다시 할 필요!!
+        int index = 7;
+        String [][] countryName =
+                { {"대한민국"}
+                        , {"독일", "프랑스", "이탈리아", "영국", "스페인", "그리스", "스위스", "네덜란드", "폴란드", "크로아디아", "오스트리아", "스웨덴", "우크라이나", "벨기에", "헝가리", "체코"}
+                        ,{"미국","캐나다"}
+                        ,{"일본"}
+                        ,{"이집트","수단","리비아","알제리","튀니지","모로코","이란","요르단"}
+                        ,{"라오스", "베트남", "말레이시아", "태국", "인도네시아", "필리핀", "싱가포르", "캄보디아", "동티모르", "브루나이","몰디브","인도"}
+                        ,{"중국", "대만"}
+                        ,{"러시아","괌","몽골","호주"} };
+
+        for(int i=0;i<8;i++){
+            for(int k=0;k<countryName[i].length;k++){
+                if(nation.equals(countryName[i][k]))
+                    index = i;
+            }
+        }
+        Log.e("CountryIndex is ...","number: "+index);
+        uploadPhtocountryName = index;
+        return index; //index가 7이면 그 외 국가임!
+    }
+
+
+
+    //countryName added2
+
+
+
 
     private String getFileExtension(Uri uri) {
         ContentResolver cR = getContentResolver();
@@ -178,7 +400,7 @@ public class FirebaseGallery extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     convertingurl=  uri.toString();
                                     Uri downloadUrl = uri;
-                                    Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),downloadUrl.toString());
+                                    Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),downloadUrl.toString(),uploadPhtocountryName);
                                     String uploadId = mDatabaseRef.push().getKey();
                                     mDatabaseRef.child(uploadId).setValue(upload);
                                     Toast.makeText(getBaseContext(), "Upload success! URL - " + downloadUrl.toString() , Toast.LENGTH_SHORT).show();
