@@ -82,7 +82,7 @@ public class FirebaseGallery extends AppCompatActivity {
     private String LONGITUDE;
     private String LONGITUDE_REF;
     Float Latitude, Longitude;
-    private int uploadPhtocountryName; //upload하는 사진의 국가
+    private int uploadPhtocountryName=0; //upload하는 사진의 국가
 
 
     @Override
