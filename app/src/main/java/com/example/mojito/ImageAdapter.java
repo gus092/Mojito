@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -25,7 +26,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import static com.example.mojito.RecyclerViewHolders.countryGalleryNumber;
 
@@ -41,15 +46,133 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public ImageAdapter(Context context, List<Upload> uploads) {
         mContext = context;
         mUploads = uploads;
+//        countryUploadsList = new List<Upload>() {
+//            @Override
+//            public int size() {
+//                return 0;
+//            }
+//
+//            @Override
+//            public boolean isEmpty() {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean contains(@Nullable Object o) {
+//                return false;
+//            }
+//
+//            @NonNull
+//            @Override
+//            public Iterator<Upload> iterator() {
+//                return null;
+//            }
+//
+//            @NonNull
+//            @Override
+//            public Object[] toArray() {
+//                return new Object[0];
+//            }
+//
+//            @NonNull
+//            @Override
+//            public <T> T[] toArray(@NonNull T[] ts) {
+//                return null;
+//            }
+//
+//            @Override
+//            public boolean add(Upload upload) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean remove(@Nullable Object o) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean containsAll(@NonNull Collection<?> collection) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean addAll(@NonNull Collection<? extends Upload> collection) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean addAll(int i, Collection<? extends Upload> collection) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean removeAll(@NonNull Collection<?> collection) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean retainAll(@NonNull Collection<?> collection) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void clear() {
+//
+//            }
+//
+//            @Override
+//            public Upload get(int i) {
+//                return null;
+//            }
+//
+//            @Override
+//            public Upload set(int i, Upload upload) {
+//                return null;
+//            }
+//
+//            @Override
+//            public void add(int i, Upload upload) {
+//
+//            }
+//
+//            @Override
+//            public Upload remove(int i) {
+//                return null;
+//            }
+//
+//            @Override
+//            public int indexOf(Object o) {
+//                return 0;
+//            }
+//
+//            @Override
+//            public int lastIndexOf(Object o) {
+//                return 0;
+//            }
+//
+//            @Override
+//            public ListIterator<Upload> listIterator() {
+//                return null;
+//            }
+//
+//            @Override
+//            public ListIterator<Upload> listIterator(int i) {
+//                return null;
+//            }
+//
+//            @Override
+//            public List<Upload> subList(int i, int i1) {
+//                return null;
+//            }
+//        };
 
 //        for(int i=0;i<mUploads.size();i++){
-//            System.out.println("++++++++++++++++++++++++++++++++++"+ mUploads.get(i));
+//
+//            if(mUploads.get(i).getcountryName()==countryGalleryNumber){
+//                System.out.println("countryGalleryNumber2222222222222222 .................    " +mUploads.get(i).getcountryName());
+//                countryUploadsList.add(mUploads.get(i));
+//            }
 //        }
-        for(int i=0;i<mUploads.size();i++){
-            if(mUploads.get(i).getcountryName()==countryGalleryNumber){
-                countryUploadsList.add(mUploads.get(i));
-            }
-        }
 
     }
 
