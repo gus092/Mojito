@@ -68,6 +68,14 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
 
                 mAdapter = new ImageAdapter(ImagesActivity.this, mUploads);
 
+                //reverse ver added
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                mLayoutManager.setReverseLayout(true);
+                mLayoutManager.setStackFromEnd(true);
+
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                //reverse ver added
+
                 mRecyclerView.setAdapter(mAdapter);
                 mAdapter.setOnItemClickListener(ImagesActivity.this);
                 mProgressCircle.setVisibility(View.INVISIBLE);
