@@ -32,6 +32,9 @@ public class LoginActivity extends AppCompatActivity {
 //    List<AuthUI.IdpConfig> providers = Arrays.asList(
 //            new AuthUI.IdpConfig.FacebookBuilder().build());
 
+    //login user
+    public static String userName;
+
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginactivity);
@@ -53,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         switch(requestCode) {
             case (REQ_EMAIL_LOGIN) : {
                 if (resultCode == Activity.RESULT_OK) {
+                    userName = data.getStringExtra("User_Name");
                     Intent User_Name_Intent = new Intent(LoginActivity.this, MainActivity.class);
                     User_Name_Intent.putExtra("User_Name", data.getStringExtra("User_Name"));
                     startActivity(User_Name_Intent);
