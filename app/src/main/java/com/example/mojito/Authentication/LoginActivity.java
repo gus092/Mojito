@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     final static int RC_SIGN_IN = 0202;
     final static int REQ_EMAIL_LOGIN = 0203;
     private CallbackManager mCallbackManager;
+    public static String UserName;
     // Choose authentication providers
 //    List<AuthUI.IdpConfig> providers = Arrays.asList(
 //            new AuthUI.IdpConfig.FacebookBuilder().build());
@@ -53,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         switch(requestCode) {
             case (REQ_EMAIL_LOGIN) : {
                 if (resultCode == Activity.RESULT_OK) {
+                    UserName = data.getStringExtra("User_Name");
                     Intent User_Name_Intent = new Intent(LoginActivity.this, MainActivity.class);
                     User_Name_Intent.putExtra("User_Name", data.getStringExtra("User_Name"));
                     startActivity(User_Name_Intent);
