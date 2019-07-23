@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import static com.example.mojito.Authentication.LoginActivity.UserName;
+import static com.example.mojito.Authentication.LoginActivity.userName;
 
 public class MakeParty extends AppCompatActivity {
     static final int REQ_OPEN_MAP = 8438;
@@ -132,7 +132,7 @@ public class MakeParty extends AppCompatActivity {
     //add==True면 데이터 저장, 이미 있으면 업데이트, add==False면 데이터 삭제
     public void postFirebaseDatabase(boolean add) {
         mPostReference = FirebaseDatabase.getInstance().getReference("parties");
-        User_Name = UserName;
+        User_Name = userName;
         String uploadId = mPostReference.push().getKey();
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
