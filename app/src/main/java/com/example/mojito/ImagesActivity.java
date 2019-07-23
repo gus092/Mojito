@@ -23,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.mojito.RecyclerViewHolders.countryGalleryNumber;
+
 public class ImagesActivity extends AppCompatActivity implements ImageAdapter.OnItemClickListener {
     private RecyclerView mRecyclerView;
     private ImageAdapter mAdapter;
@@ -54,10 +56,15 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Upload upload = postSnapshot.getValue(Upload.class);
                     //Log.e("upload에 들어가는것...","::::: "+ upload);
-                    mUploads.add(upload);
+
+                        if(upload.getcountryName()==countryGalleryNumber){
+                            mUploads.add(upload);
+                        }
+
                     count++;
                     //Log.e("count","the number of count.."+count);
                 }
+                System.out.println("ooooooooooooooooooooookkkkkkkkkkkkkkkkkkkk");
 
                 mAdapter = new ImageAdapter(ImagesActivity.this, mUploads);
 

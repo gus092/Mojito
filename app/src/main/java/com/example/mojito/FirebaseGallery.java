@@ -380,11 +380,6 @@ public class FirebaseGallery extends AppCompatActivity {
                             //added
 
                             Toast.makeText(FirebaseGallery.this, "Upload successful", Toast.LENGTH_LONG).show();
-                            Log.e("fileReference"," is "+fileReference);
-                            Log.e("convertingurl"," is "+convertingurl);
-
-                           Log.e("fileReference222","is"+fileReference.getDownloadUrl());
-
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
