@@ -44,7 +44,11 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.mojito.Authentication.LoginActivity.userName;
 
 
 public class FirebaseGallery extends AppCompatActivity {
@@ -368,9 +372,11 @@ public class FirebaseGallery extends AppCompatActivity {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
+                                    ArrayList<String> likedlist = new ArrayList<>();
+                                    //likedlist.add(userName);
                                     convertingurl=  uri.toString();
                                     Uri downloadUrl = uri;
-                                    Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),downloadUrl.toString(),uploadPhtocountryName);
+                                    Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),downloadUrl.toString(),uploadPhtocountryName,userName,likedlist);
                                     String uploadId = mDatabaseRef.push().getKey();
                                     mDatabaseRef.child(uploadId).setValue(upload);
                                     Toast.makeText(getBaseContext(), "Upload success! URL - " + downloadUrl.toString() , Toast.LENGTH_SHORT).show();

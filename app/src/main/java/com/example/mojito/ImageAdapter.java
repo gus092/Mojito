@@ -1,38 +1,24 @@
 package com.example.mojito;
 
+import android.app.AlertDialog;
 import android.content.Context;
 
-import android.net.Uri;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-
-import static com.example.mojito.RecyclerViewHolders.countryGalleryNumber;
 
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
@@ -42,6 +28,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     private List<Upload> countryUploadsList;
 
     private OnItemClickListener mListener;
+
+    private OnItemLongClickListener mLongListener;
 
     public ImageAdapter(Context context, List<Upload> uploads) {
         mContext = context;
@@ -179,6 +167,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.image_item, parent, false);
+        Log.e("I'm here","onCreatViewholder..");
         return new ImageViewHolder(v);
     }
 
@@ -215,7 +204,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         return mUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
         public TextView textViewName;
         public ImageView imageView;
         public ImageButton lime_btn;
@@ -230,11 +219,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             //added
             lime_btn.setOnClickListener(this);
 
-
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
 
         }
-
 
         @Override
         public void onClick(View v){
@@ -242,24 +230,47 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                 int position = getAdapterPosition();
                 if(position !=RecyclerView.NO_POSITION){
                     mListener.onItemClick(position);
-                    Toast.makeText(mContext,"This is aboutclicklistener", Toast.LENGTH_LONG).show();
+                   // Toast.makeText(mContext,"This is aboutclicklistener", Toast.LENGTH_LONG).show();
 //                    Glide.with(mContext).load(R.drawable.lime2).into(holder.lime_btn);
 
                 }
-
             }
+        }
+
+        @Override
+        public boolean onLongClick(View v){
+            if(mLongListener != null){
+                int position = getAdapterPosition();
+                if(position !=RecyclerView.NO_POSITION){
+                    mLongListener.onDeleteClick(position);
+
+
+                }
+           }
+            return true;
         }
 
     }
 
     public interface OnItemClickListener{
         void onItemClick(int position);
+
+        //void onDeleteClick(int position);
 //
 //        void onWhatEverClick(int position);
 //        void onDeleteClick(int position);
     }
+
     public void setOnItemClickListener(OnItemClickListener listener){
         mListener = listener;
     }
 
+    public interface OnItemLongClickListener{
+        void onDeleteClick(int position);
+        //
+        //void onDeleteClick(int position);
+    }
+    public void setOnItemLongClickListener(OnItemLongClickListener listener){
+        mLongListener = listener;
+    }
 }
