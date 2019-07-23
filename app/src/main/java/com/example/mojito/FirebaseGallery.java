@@ -127,10 +127,7 @@ public class FirebaseGallery extends AppCompatActivity {
     }
 
     private void openFileChooser() {
-//        Intent intent = new Intent();
-//        intent.setType("image/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
@@ -185,7 +182,13 @@ public class FirebaseGallery extends AppCompatActivity {
         try {
             ExifInterface exif = new ExifInterface(stringtemp);
             showExif(exif);
-            findAddress(Latitude, Longitude);
+            if(Latitude!=null&&Longitude!=null){
+                findAddress(Latitude, Longitude);
+            }else{                  // 오류해결,캡쳐사진은 default로 others에 넣기
+                nation="러시아";
+                uploadPhtocountryName=7;
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "Error!", Toast.LENGTH_LONG).show();
@@ -194,37 +197,6 @@ public class FirebaseGallery extends AppCompatActivity {
     } //temFile가지고 showExif에 넘겨주기
 
     private void showExif(ExifInterface exif) {
-        //latitude = getTagString(ExifInterface.TAG_GPS_LATITUDE, exif);
-
-
-        //longitude = getTagString(ExifInterface.TAG_GPS_LONGITUDE, exif);
-
-//        String myAttribute = "[Exif information] \n\n";
-//
-//        myAttribute += getTagString(ExifInterface.TAG_DATETIME, exif);
-//        myAttribute += getTagString(ExifInterface.TAG_FLASH, exif);
-//        myAttribute += getTagString(ExifInterface.TAG_GPS_LATITUDE,
-//                exif);
-//        myAttribute += getTagString(
-//                ExifInterface.TAG_GPS_LATITUDE_REF, exif);
-//        myAttribute += getTagString(ExifInterface.TAG_GPS_LONGITUDE,
-//                exif);
-//        myAttribute += getTagString(
-//                ExifInterface.TAG_GPS_LONGITUDE_REF, exif);
-//        myAttribute += getTagString(ExifInterface.TAG_IMAGE_LENGTH,
-//                exif);
-//        myAttribute += getTagString(ExifInterface.TAG_IMAGE_WIDTH,
-//                exif);
-//        myAttribute += getTagString(ExifInterface.TAG_MAKE, exif);
-//        myAttribute += getTagString(ExifInterface.TAG_MODEL, exif);
-//        myAttribute += getTagString(ExifInterface.TAG_ORIENTATION,
-//                exif);
-//        myAttribute += getTagString(ExifInterface.TAG_WHITE_BALANCE,
-//                exif);
-//
-
-//        lat = Double.parseDouble(latitude);
-//        lng = Double.parseDouble(longitude);
 
         //modified
         LATITUDE = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
@@ -251,8 +223,6 @@ public class FirebaseGallery extends AppCompatActivity {
             }
 
         }
-
-
         //modified
 
 
@@ -262,6 +232,7 @@ public class FirebaseGallery extends AppCompatActivity {
 
     //modified22
     private Float convertToDegree(String stringDMS) {
+
         Float result = null;
         String[] DMS = stringDMS.split(",", 3);
 

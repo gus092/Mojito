@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.mojito.R;
 import com.example.mojito.Upload;
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImagesActivity extends AppCompatActivity {
+public class ImagesActivity extends AppCompatActivity implements ImageAdapter.OnItemClickListener {
     private RecyclerView mRecyclerView;
     private ImageAdapter mAdapter;
 
@@ -61,6 +62,7 @@ public class ImagesActivity extends AppCompatActivity {
                 mAdapter = new ImageAdapter(ImagesActivity.this, mUploads);
 
                 mRecyclerView.setAdapter(mAdapter);
+                mAdapter.setOnItemClickListener(ImagesActivity.this);
                 mProgressCircle.setVisibility(View.INVISIBLE);
             }
 
@@ -71,6 +73,12 @@ public class ImagesActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onItemClick(int position){ //사진 클릭했을때
+        Toast.makeText(getBaseContext(),"This is aboutclicklistener", Toast.LENGTH_SHORT).show();
+    }
+
+
 }
 
 

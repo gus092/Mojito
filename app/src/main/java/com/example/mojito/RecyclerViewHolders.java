@@ -12,6 +12,7 @@ public class RecyclerViewHolders extends RecyclerView.ViewHolder implements View
 
     public TextView countryName;
     public ImageView countryPhoto;
+    public static int countryGalleryNumber; //들어온 갤러리 구분하기
 
     public RecyclerViewHolders(View itemView) {
         super(itemView);
@@ -22,6 +23,9 @@ public class RecyclerViewHolders extends RecyclerView.ViewHolder implements View
 
     @Override
     public void onClick(View view) {
+
+        countryGalleryNumber=getPosition(); //들어온 갤러리 번호 구분해주기
+
         Toast.makeText(view.getContext(), "Clicked Country Position = " + getPosition(), Toast.LENGTH_SHORT).show();
         Intent intent2 = new Intent(view.getContext(), CustomGallery.class);
         intent2.putExtra("namedir",getPosition());
