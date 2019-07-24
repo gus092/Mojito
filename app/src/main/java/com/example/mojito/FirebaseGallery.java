@@ -374,7 +374,8 @@ public class FirebaseGallery extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     ArrayList<String> likedlist = new ArrayList<>();
-                                    //likedlist.add(userName);
+                                    likedlist.add("a");
+                                    likedlist.add("b");
                                     convertingurl=  uri.toString();
                                     Uri downloadUrl = uri;
                                     Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),downloadUrl.toString(),uploadPhtocountryName,userName,likedlist);

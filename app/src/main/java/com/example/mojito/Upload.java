@@ -12,7 +12,7 @@ public class Upload {
     private String mImageUrl;
     private int mcountryName; //찍은 국가 분류해주는 int
     private String mwriter;  //글쓴이
-    private ArrayList<String> mlikedUserList;
+    private ArrayList<String> mlikedUserList; //좋아요를 누른 사람의 목록
 
     public String mKey;
 
@@ -63,6 +63,10 @@ public class Upload {
 //likedUser
 
     public ArrayList<String> getmlikedUserList() {
+
+        for (int k=0; k<mlikedUserList.size();k++)
+        Log.e("REturn..",",,,,"+mlikedUserList.get(k));
+
         return mlikedUserList;
     }
 

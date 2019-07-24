@@ -4,13 +4,16 @@ package com.example.mojito;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +22,7 @@ import com.example.mojito.R;
 import com.example.mojito.Upload;
 import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,6 +75,20 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         mStorage= FirebaseStorage.getInstance();
         //delete added
 
+        //upload 페이지 전환
+        Button firebaseUploadBtn = (Button) findViewById(R.id.firebaseUpload_btn);
+        firebaseUploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),FirebaseGallery.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
 
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
@@ -119,6 +137,50 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
     @Override
     public void onItemClick(int position){ //사진 클릭했을때
         Toast.makeText(getBaseContext(),"This is about clicklistener", Toast.LENGTH_SHORT).show();
+
+        Upload selectedItem2 = mUploads.get(position);
+        final String selectedKey = selectedItem2.getKey();
+
+
+        FirebaseDatabase  database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseRef2 = database.getReference().child("uploads");
+        //DatabaseReference messagesRef2 =  mDatabaseRef.child(selectedKey);
+
+        mDatabaseRef2.orderByChild("mlikedUserList").addListenerForSingleValueEvent(new ValueEventListener() {
+            ArrayList<String> likedUsers;
+            int flag=0; //like를 누른 사람중 같은 id가 있는지 확인하는작업
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+//                    Upload user1 = userSnapshot.getValue(Upload.class);
+//                    likedUsers = user1.getmlikedUserList();
+//                  //  Log.e("like list is ...","..."+ user1.getmwriter());
+//                }
+                Upload user1= dataSnapshot.child(selectedKey).getValue(Upload.class);
+                likedUsers = user1.getmlikedUserList();
+
+                for(int i =0;i<likedUsers.size();i++){
+                    System.out.println("===================================================="+likedUsers.get(i));
+                    if(likedUsers.get(i).equals(userName)){ //이미 like버튼을 누른 목록에 있음
+                        //flag그대로 0
+                        flag=0;
+
+                        Log.e("누구랑 비교중?","...."+likedUsers.get(i));
+                        Log.e("Already","...."+ likedUsers.get(i));
+                    }else{
+                        flag=1;
+                  }
+                }
+                if(flag==1){ //새로 like를 누른다면
+                    likedUsers.add(userName);
+                    mDatabaseRef2.child(selectedKey).child("mlikedUserList").setValue(likedUsers);
+                }
+                flag=0;
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
     }
     @Override
     public void onDeleteClick(int position){ //사진 클릭했을때
@@ -203,7 +265,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                         Toast.makeText(ImagesActivity.this, "취소하였습니다.", Toast.LENGTH_SHORT).show();
                     }})
                 .show();
-    }
+    } //사진 삭제 in DB
 
     @Override
     protected void onDestroy(){
@@ -211,77 +273,3 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         mDatabaseRef.removeEventListener(mDBListener);
     }
 }
-//onDeleteClick(int position);
-
-
-
-//import android.app.Activity;
-//import android.os.Bundle;
-//import android.util.Log;
-//import android.view.View;
-//import android.widget.ProgressBar;
-//import android.widget.Toast;
-//
-//import androidx.annotation.NonNull;
-//import androidx.appcompat.app.AppCompatActivity;
-//import androidx.recyclerview.widget.LinearLayoutManager;
-//import androidx.recyclerview.widget.RecyclerView;
-//
-//import com.google.firebase.database.DataSnapshot;
-//import com.google.firebase.database.DatabaseError;
-//import com.google.firebase.database.DatabaseReference;
-//import com.google.firebase.database.FirebaseDatabase;
-//import com.google.firebase.database.ValueEventListener;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//public class ImagesActivity extends AppCompatActivity {
-//    private RecyclerView mRecyclerView;
-//    private  ImageAdapter mAdapter;
-//
-//    private ProgressBar mProgressCircle;
-//
-//    private DatabaseReference mDatabaseRef;
-//    private List<Upload> mUploads;
-//
-//
-//    @Override
-//    protected void onCreate(Bundle saveInstanceState) {
-//        super.onCreate(saveInstanceState);
-//        setContentView(R.layout.imagesactivity);
-//
-//        mRecyclerView = findViewById(R.id.recycler_view);
-//        mRecyclerView.setHasFixedSize(true);
-//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//
-//
-//        mProgressCircle = findViewById(R.id.progress_circle);
-//
-//        mUploads = new ArrayList<>();
-//        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
-//
-//        mDatabaseRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                int count=0;
-//                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-//                    Upload upload = postSnapshot.getValue(Upload.class);
-//                    mUploads.add(upload);
-//                    Log.e("I'm here","count"+count);
-//                    count++;
-//                }
-//                Log.e("count,,,,","count"+count);
-//                mAdapter = new ImageAdapter(ImagesActivity.this, mUploads);
-//                mRecyclerView.setAdapter(mAdapter);
-//                mProgressCircle.setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Toast.makeText(ImagesActivity.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-//
-//}

@@ -94,7 +94,7 @@ public class MainActivity extends Activity{
 
     private List<Item> getAllItemList(){
         List<Item> allItems = new ArrayList<Item>();
-                allItems.add(new Item("\n# KOREA", R.drawable.korea));
+                allItems.add(new Item("\n# KOREA", R.drawable.korea3));
                 allItems.add(new Item("\n# EUROPE", R.drawable.london));
                 allItems.add(new Item("\n# USA\n/CANADA", R.drawable.usa));
                 allItems.add(new Item("\n# JAPAN", R.drawable.japan));
