@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mojito.R;
 import com.example.mojito.Upload;
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -75,9 +76,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 mUploads.clear();
-
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Upload upload = postSnapshot.getValue(Upload.class);
                     upload.setKey(postSnapshot.getKey());
@@ -85,7 +84,6 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
 
                         if(upload.getcountryName()==countryGalleryNumber){ // countryname별로 띄워줌
                             mUploads.add(upload);
-                            System.out.println("ooooooooooooooooooooookkkkkkkkkkkkkkkkkkkk "+ postSnapshot.getKey());
                         }
                     //Log.e("count","the number of count.."+count);
                 }
@@ -107,9 +105,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
 //                mAdapter.setOnItemClickListener(ImagesActivity.this);
 //                mAdapter.setOnItemLongClickListener(ImagesActivity.this);
 //GOBACK
-
                 mAdapter.notifyDataSetChanged();
-
                 mProgressCircle.setVisibility(View.INVISIBLE);
             }
 
@@ -122,9 +118,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
     }
     @Override
     public void onItemClick(int position){ //사진 클릭했을때
-        Toast.makeText(getBaseContext(),"This is aboutclicklistener", Toast.LENGTH_SHORT).show();
-
-
+        Toast.makeText(getBaseContext(),"This is about clicklistener", Toast.LENGTH_SHORT).show();
     }
     @Override
     public void onDeleteClick(int position){ //사진 클릭했을때
@@ -136,19 +130,72 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                          //확인시 처리 로직
+
                         Upload selectedItem = mUploads.get(position);
                         final String selectedKey = selectedItem.getKey();
 
                         StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getImageUrl());
-                        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                      //  StorageReference writerRef= mStorage.getReference(selectedItem.getmwriter());
+      //writer detect added
+//                      DatabaseReference messagesRef =  mDatabaseRef.child(selectedKey);
+//                        ValueEventListener eventListener = new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                                    //for (DataSnapshot nameSnapshot : ds.child("uploads").getChildren()) {
+//                                        Upload name = ds.getValue(Upload.class);
+//                                        String compareName = name.getmwriter();
+//                                        Log.e("TAG", compareName);
+//                                   // }
+//                                }
+//                            }
+//                            @Override
+//                            public void onCancelled(DatabaseError databaseError) {}
+//                        };
+//                        messagesRef.addListenerForSingleValueEvent(eventListener);
+      //writer added
+                        mDatabaseRef.orderByChild("mwriter").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+                            //글쓴이만 사진을 지울 수 있도록 포스팅된 writer값 datasnapshot에 받아오기
+                            //글쓴이만 사진삭제할수 있도록 처리
+                            //우선 userName으로 sort하고 datasnapshot에서 해당 key로 selectitem을 지정해서 제거
+                            //compareNaem에는 선택한 사진의 게시자 아이디가 들어있음.
+                            //이걸 로그인한 아이디와 비교하기
+                            String compareName="noname";
                             @Override
-                            public void onSuccess(Void aVoid) {
-                                mDatabaseRef.child(selectedKey).removeValue();
-                                Toast.makeText(ImagesActivity.this, "삭제를 완료했습니다.", Toast.LENGTH_SHORT).show();
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                                   Upload user1 = userSnapshot.getValue(Upload.class);
+                                   compareName = user1.getmwriter();
+                                    Log.e("userSnapshot","..."+ user1.getmwriter());
+                                }
+
+                                Log.e("writerRef","is...."+  mDatabaseRef.child(selectedKey).equals(userName));
+                               // Log.e("writerRef22222222","is...."+ writerRef);
+
+                                if(compareName.equals(userName)){
+                                    Log.e("compareName","Here is...."+ compareName);
+
+                                    imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            mDatabaseRef.child(selectedKey).removeValue();
+                                            Toast.makeText(ImagesActivity.this, "삭제를 완료했습니다.", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    });
+                                }else{
+                                    Toast.makeText(ImagesActivity.this,"삭제권한이 없습니다.",Toast.LENGTH_SHORT).show();
+                                }
 
                             }
-                        });
-                        //finish();
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {}
+                      });
+
+
+
+
+                       // finish();
                     }})
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
