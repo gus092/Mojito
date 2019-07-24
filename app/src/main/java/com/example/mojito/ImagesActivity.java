@@ -174,6 +174,10 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                 if(flag==1){ //새로 like를 누른다면
                     likedUsers.add(userName);
                     mDatabaseRef2.child(selectedKey).child("mlikedUserList").setValue(likedUsers);
+                }else{
+                    likedUsers.remove(userName);
+                    mDatabaseRef2.child(selectedKey).child("mlikedUserList").setValue(likedUsers);
+
                 }
                 flag=0;
             }

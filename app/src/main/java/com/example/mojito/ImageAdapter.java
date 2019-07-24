@@ -17,8 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 
 import java.util.List;
+
+import static com.example.mojito.Authentication.LoginActivity.userName;
 
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
@@ -52,12 +55,38 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         Log.e("textViewName","is.."+uploadCurrent.getName());
 
        // holder.lime_btn.setImageResource(R.drawable.lime2);
-        Glide.with(mContext)
-                .load(R.drawable.lime2)
-                //.placeholder(R.drawable.lime2)
+        for (int i=0; i<mUploads.get(position).getmlikedUserList().size();i++){
+            if(mUploads.get(position).getmlikedUserList().get(i).equals(userName)){//좋아요를 누른 상태
+
+
+                Glide.with(mContext)
+                        .load(R.drawable.actionheart)
 //                .fit()
-                //.centerCrop()
-                .into(holder.lime_btn);
+                        .priority(Priority.HIGH)
+                        .centerCrop()
+                        .into(holder.lime_btn);
+
+                Glide.with(mContext)
+                        .load(R.drawable.hearton)
+                        .priority(Priority.HIGH)
+//                .fit()
+                        .centerCrop()
+                        .into(holder.lime_btn);
+
+
+
+            }else{ //좋아요 안누른 상태
+                Glide.with(mContext)
+                        .load(R.drawable.blankkheart)
+                        //.placeholder(R.drawable.lime2)
+//                .fit()
+                        //.centerCrop()
+                        .into(holder.lime_btn);
+
+            }
+        }
+
+
 
 
 
