@@ -136,7 +136,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
     }
     @Override
     public void onItemClick(int position){ //사진 클릭했을때
-        Toast.makeText(getBaseContext(),"This is about clicklistener", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getBaseContext(),"This is about clicklistener", Toast.LENGTH_SHORT).show();
 
         Upload selectedItem2 = mUploads.get(position);
         final String selectedKey = selectedItem2.getKey();
@@ -160,13 +160,10 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                 likedUsers = user1.getmlikedUserList();
 
                 for(int i =0;i<likedUsers.size();i++){
-                    System.out.println("===================================================="+likedUsers.get(i));
+                    //System.out.println("===================================================="+likedUsers.get(i));
                     if(likedUsers.get(i).equals(userName)){ //이미 like버튼을 누른 목록에 있음
                         //flag그대로 0
                         flag=0;
-
-                        Log.e("누구랑 비교중?","...."+likedUsers.get(i));
-                        Log.e("Already","...."+ likedUsers.get(i));
                     }else{
                         flag=1;
                   }
@@ -174,10 +171,11 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                 if(flag==1){ //새로 like를 누른다면
                     likedUsers.add(userName);
                     mDatabaseRef2.child(selectedKey).child("mlikedUserList").setValue(likedUsers);
+                    Toast.makeText(getBaseContext(),"'좋아요'", Toast.LENGTH_SHORT).show();
                 }else{
                     likedUsers.remove(userName);
                     mDatabaseRef2.child(selectedKey).child("mlikedUserList").setValue(likedUsers);
-
+                    Toast.makeText(getBaseContext(),"'좋아요 취소'", Toast.LENGTH_SHORT).show();
                 }
                 flag=0;
             }
@@ -201,25 +199,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                         final String selectedKey = selectedItem.getKey();
 
                         StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getImageUrl());
-                      //  StorageReference writerRef= mStorage.getReference(selectedItem.getmwriter());
-      //writer detect added
-//                      DatabaseReference messagesRef =  mDatabaseRef.child(selectedKey);
-//                        ValueEventListener eventListener = new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(DataSnapshot dataSnapshot) {
-//                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                                    //for (DataSnapshot nameSnapshot : ds.child("uploads").getChildren()) {
-//                                        Upload name = ds.getValue(Upload.class);
-//                                        String compareName = name.getmwriter();
-//                                        Log.e("TAG", compareName);
-//                                   // }
-//                                }
-//                            }
-//                            @Override
-//                            public void onCancelled(DatabaseError databaseError) {}
-//                        };
-//                        messagesRef.addListenerForSingleValueEvent(eventListener);
-      //writer added
+
                         mDatabaseRef.orderByChild("mwriter").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
                             //글쓴이만 사진을 지울 수 있도록 포스팅된 writer값 datasnapshot에 받아오기
                             //글쓴이만 사진삭제할수 있도록 처리

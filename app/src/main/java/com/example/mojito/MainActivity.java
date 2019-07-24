@@ -94,14 +94,14 @@ public class MainActivity extends Activity{
 
     private List<Item> getAllItemList(){
         List<Item> allItems = new ArrayList<Item>();
-                allItems.add(new Item("\n# KOREA", R.drawable.korea3));
+                allItems.add(new Item("\n# KOREA", R.drawable.korea5));
                 allItems.add(new Item("\n# EUROPE", R.drawable.london));
                 allItems.add(new Item("\n# USA\n/CANADA", R.drawable.usa));
-                allItems.add(new Item("\n# JAPAN", R.drawable.japan));
+                allItems.add(new Item("\n# JAPAN", R.drawable.japan3));
                 allItems.add(new Item("\n# AFRICA", R.drawable.africa));
                 allItems.add(new Item("\n# ASIA\n/INDIA", R.drawable.seaisa));
                 allItems.add(new Item("\n# CHINA\n/TAIWAN", R.drawable.taiwan));
-                allItems.add(new Item("\n# OTHERS", R.drawable.others));
+                allItems.add(new Item("\n# OTHERS", R.drawable.others2));
         return allItems;
     }
     public void initialize(){

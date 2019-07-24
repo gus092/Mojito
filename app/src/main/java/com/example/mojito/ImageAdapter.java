@@ -60,27 +60,19 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
 
                 Glide.with(mContext)
-                        .load(R.drawable.actionheart)
+                        .load(R.drawable.like)
 //                .fit()
-                        .priority(Priority.HIGH)
+                        //.priority(Priority.HIGH)
                         .centerCrop()
                         .into(holder.lime_btn);
-
-                Glide.with(mContext)
-                        .load(R.drawable.hearton)
-                        .priority(Priority.HIGH)
-//                .fit()
-                        .centerCrop()
-                        .into(holder.lime_btn);
-
 
 
             }else{ //좋아요 안누른 상태
                 Glide.with(mContext)
-                        .load(R.drawable.blankkheart)
+                        .load(R.drawable.unlike)
                         //.placeholder(R.drawable.lime2)
 //                .fit()
-                        //.centerCrop()
+                        .centerCrop()
                         .into(holder.lime_btn);
 
             }

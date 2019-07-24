@@ -64,8 +64,8 @@ public class Upload {
 
     public ArrayList<String> getmlikedUserList() {
 
-        for (int k=0; k<mlikedUserList.size();k++)
-        Log.e("REturn..",",,,,"+mlikedUserList.get(k));
+//        for (int k=0; k<mlikedUserList.size();k++)
+//        Log.e("REturn..",",,,,"+mlikedUserList.get(k));
 
         return mlikedUserList;
     }
