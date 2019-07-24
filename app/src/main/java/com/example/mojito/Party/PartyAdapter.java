@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,14 +41,15 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.partyviewhol
         public TextView user_id;
         public ImageView user_photo;
         public TextView description;
+        public ProgressBar progressBar;
         public partyviewholder(final View itemView){
             super(itemView);
-
             destination = itemView.findViewById(R.id.destination);
             attribute= itemView.findViewById(R.id.attribute);
             user_id = itemView.findViewById(R.id.user_id);
             user_photo = itemView.findViewById(R.id.user_photo);
             description = itemView.findViewById(R.id.description);
+            progressBar = itemView.findViewById(R.id.number);
 //            final LinearLayout addView = (LinearLayout) itemView.findViewById(R.id.add_sub);
 
 //            itemView.setOnClickListener(new View.OnClickListener() {
@@ -127,9 +129,11 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.partyviewhol
         PartyItem PartyItem = mDataset.get(position);
         holder.destination.setText(PartyItem.getDestination());
         holder.attribute.setText(PartyItem.getAttribute());
-        holder.user_photo.setImageBitmap(PartyItem.getUser_photo());
-        holder.user_id.setText(PartyItem.getUser_Name());
+//        holder.user_photo.setImageBitmap(PartyItem.getUser_photo());
+        holder.user_id.setText(PartyItem.getuser_Name());
         holder.description.setText(PartyItem.getDescription());
+        holder.progressBar.setMax(PartyItem.getCapacity());
+        holder.progressBar.setProgress(PartyItem.getNum_people());
     }
 
     // Get Item Count

@@ -2,32 +2,31 @@ package com.example.mojito.Party;
 
 import android.graphics.Bitmap;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
-
+@IgnoreExtraProperties
 public class PartyItem implements Serializable {
-    private String destination;
-    private String User_Name;
-    private String attribute;
-    private String description;
-    private int id;
-    private Bitmap photo;
-    private long photo_id=0, person_id=0; // this for identifying photo
+    public String destination;
+    public String user_Name;
+    public String attribute;
+    public String description;
+    public Integer capacity;
+    public Integer num_people;
+
     public PartyItem(){}
 
-    public PartyItem(String destination, String User_Name, String attribute, String description, Bitmap photo){
+    public PartyItem(String User_Name, String destination, String attribute, String description, Integer capacity, Integer num_people){
         this.destination = destination;
-        this.User_Name = User_Name;
+        this.user_Name = User_Name;
         this.attribute = attribute;
         this.description = description;
-        this.photo = photo;
-    }
-
-    public void setId(int id){
-        this.id = id;
-    }
-    public int getId(){
-        return id;
+        this.capacity = capacity;
+        this.num_people = num_people;
     }
 
     public void setDestination(String destination){
@@ -38,45 +37,43 @@ public class PartyItem implements Serializable {
     }
 
     public void setUser_Name(String string){
-        this.User_Name = string;
+        this.user_Name = string;
     }
-    public String getUser_Name(){
-        return User_Name;
+    public String getuser_Name(){
+        return user_Name;
     }
 
     public void setAttribute(String string){
-        this.attribute= attribute;
+        this.attribute= string;
     }
     public String getAttribute(){
         return attribute;
     }
 
     public void setDescription(String string) {
-        this.description = description;
+        this.description = string;
     }
     public String getDescription() {
         return description;
     }
 
-    public void setPhoto_id(long id){
-        this.photo_id = id;
-    }
-    public void setPerson_id(long id){
-        this.person_id = id;
-    }
+    public void setCapacity(Integer integer){this.capacity = integer;}
+    public Integer getCapacity(){return capacity;}
 
-    public long getPhoto_id(){
-        return photo_id;
-    }
-    public long getPerson_id(){
-        return person_id;
-    }
+    public void setNum_people(Integer integer){this.num_people = integer;}
+    public Integer getNum_people(){return num_people;}
 
-    public void setUser_photo(Bitmap photo){
-        this.photo = photo;
-    }
-    public Bitmap getUser_photo(){
-        return  photo;
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("user_Name", user_Name);
+        result.put("destination", destination);
+        result.put("attribute", attribute);
+        result.put("description", description);
+        result.put("capacity",capacity);
+        result.put("num_people",num_people);
+        return result;
     }
 
 

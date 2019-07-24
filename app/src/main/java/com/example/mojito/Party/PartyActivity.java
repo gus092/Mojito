@@ -23,18 +23,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mojito.ImageAdapter;
+import com.example.mojito.ImagesActivity;
 import com.example.mojito.R;
+import com.example.mojito.Upload;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 
 public class PartyActivity extends AppCompatActivity {
     static final int REQ_MAKE_PARTY = 5921;
-    ArrayList<PartyItem> party_items = new ArrayList<PartyItem>();
+    ArrayList<PartyItem> party_items; //누나꺼에서 mUploads
     RecyclerView recyclerView;
-    PartyAdapter adapter;
-    Loadpartys loadpartyTask;
+    private PartyAdapter partyAdapter;
+    private DatabaseReference mDatabaseRef;
+//
+//    Loadpartys loadpartyTask;
     public PartyActivity(){ }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,8 +52,36 @@ public class PartyActivity extends AppCompatActivity {
         setContentView(R.layout.partyactivity);
         recyclerView = findViewById(R.id.party_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        loadpartyTask = new Loadpartys();
-        loadpartyTask.execute();
+        ArrayList<PartyItem> party_items = new ArrayList<PartyItem>();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("parties");
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int count=0;
+                party_items.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    PartyItem partyItem= postSnapshot.getValue(PartyItem.class);
+                    //Log.e("upload에 들어가는것...","::::: "+ upload);
+                    party_items.add(partyItem);
+                    count++;
+                    //Log.e("count","the number of count.."+count);
+                }
+
+                partyAdapter = new PartyAdapter(party_items);
+                partyAdapter.notifyDataSetChanged();
+                recyclerView.setAdapter(partyAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+//
+//
+//        loadpartyTask = new Loadpartys();
+//        loadpartyTask.execute();
 
         // ADD party Button
         Button make_party = findViewById(R.id.make_party);
@@ -97,27 +135,27 @@ public class PartyActivity extends AppCompatActivity {
 //        return root;
 //    }
 
-    // Run loadpartys in Background Thread
-    class Loadpartys extends AsyncTask<String, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-//            party_items.clear();
-        }
-
-        @Override
-        protected String doInBackground(String... args) {
-            String xml = "";
-            //if (isFirstTime()) { getpartyList(); }
-            // Load partys from DB
-//            party_items= load_partys();
-            return xml;
-        }
-
-        @Override
-        protected void onPostExecute(String xml) {
-            adapter = new PartyAdapter(party_items);
-            recyclerView.setAdapter(adapter);
+//    // Run loadpartys in Background Thread
+//    class Loadpartys extends AsyncTask<String, Void, String> {
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+////            party_items.clear();
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... args) {
+//            String xml = "";
+//            //if (isFirstTime()) { getpartyList(); }
+//            // Load partys from DB
+////            party_items= load_partys();
+//            return xml;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String xml) {
+//            adapter = new PartyAdapter(party_items);
+//            recyclerView.setAdapter(adapter);
 //
 //            // EDIT & DELETE & CALL party
 //            adapter.setOnItemClickListener(new PartyAdapter.OnItemClickListener() {
@@ -153,7 +191,6 @@ public class PartyActivity extends AppCompatActivity {
 //                }
 //            });
         }
-    }
 
 //    get Result from add or edit party
 //    @Override
@@ -322,5 +359,3 @@ public class PartyActivity extends AppCompatActivity {
 //        rBitmap = Bitmap.createScaledBitmap(oBitmap, (int) width, (int) height, true);
 //        return rBitmap;
 //    }
-
-}
