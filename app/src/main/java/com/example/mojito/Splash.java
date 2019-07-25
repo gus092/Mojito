@@ -18,13 +18,12 @@ public class Splash extends Activity {
         setContentView(R.layout.activity_splash);
 
 
-        ImageView gifholder = (ImageView) findViewById(R.id.splashGif);
-        //GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(rabbit);
-        Glide.with(this).load(R.drawable.mojitosplash).into(gifholder);
+        //ImageView gifholder = (ImageView) findViewById(R.id.splashGif);
+        //Glide.with(this).load(R.drawable.splash).into(gifholder);
 
 
         Handler hd = new Handler();
-        hd.postDelayed(new splashhandler(), 1750); // 1초 후에 hd handler 실행  3000ms = 3초
+        hd.postDelayed(new splashhandler(), 1250); // 1초 후에 hd handler 실행  3000ms = 3초
 
     }
 

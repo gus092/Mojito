@@ -32,11 +32,11 @@
                 android:text="CountryName"
                 android:fontFamily="@font/yes"
                 android:textColor="@color/white"
-                android:textSize="35sp"/>
-                <!--android:shadowColor="#000000"-->
-                <!--android:shadowDx="0.2"-->
-                <!--android:shadowDy="0.2"-->
-                <!--android:shadowRadius="0.2"-->
+                android:textSize="35sp"
+                android:shadowColor="#000000"
+                android:shadowDx="0.2"
+                android:shadowDy="0.2"
+                android:shadowRadius="0.2"/>
 
         </FrameLayout>
 
