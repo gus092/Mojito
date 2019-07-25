@@ -56,11 +56,11 @@
             android:layout_marginTop="8dp"
             android:text="Search"
             android:textSize="24sp"
-            app:layout_constraintStart_toEndOf="@+id/btn_Search"
+            app:layout_constraintStart_toEndOf="@+id/btn_Match"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/btn_Search"
+            android:id="@+id/btn_Match"
             android:layout_width="40sp"
             android:layout_height="40sp"
             android:layout_marginStart="32dp"

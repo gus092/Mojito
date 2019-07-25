@@ -94,14 +94,15 @@ public class MainActivity extends Activity{
 
     private List<Item> getAllItemList(){
         List<Item> allItems = new ArrayList<Item>();
-                allItems.add(new Item("# KOREA", R.drawable.korea3));
-                allItems.add(new Item("# EUROPE", R.drawable.london));
-                allItems.add(new Item("\n# USA\n/CANADA", R.drawable.usa));
-                allItems.add(new Item("# JAPAN", R.drawable.japan3));
-                allItems.add(new Item("# AFRICA", R.drawable.africa));
-                allItems.add(new Item("\n# ASIA\n/INDIA", R.drawable.seaisa));
-                allItems.add(new Item("\n# CHINA\n/TAIWAN", R.drawable.taiwan));
-                allItems.add(new Item("# OTHERS", R.drawable.others2));
+                allItems.add(new Item("Korea", R.drawable.korea3));
+                allItems.add(new Item("India \n SE Asia", R.drawable.india));
+                allItems.add(new Item("Americas", R.drawable.usa));
+                allItems.add(new Item("Japan", R.drawable.japan3));
+                allItems.add(new Item("Africa \n Middle East", R.drawable.africa));
+                allItems.add(new Item("Europe", R.drawable.london));
+                allItems.add(new Item("China \n Taiwan", R.drawable.taiwan));
+                allItems.add(new Item("Oceania \n Guam", R.drawable.oceania2));
+                allItems.add(new Item("Russia \n Central Asia", R.drawable.others2));
         return allItems;
     }
     public void initialize(){

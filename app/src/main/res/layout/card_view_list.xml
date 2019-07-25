@@ -25,18 +25,18 @@
             <TextView
                 android:id="@+id/country_name"
                 android:layout_width="match_parent"
-                android:layout_height="175dp"
+                android:layout_height="180dp"
                 android:gravity="center"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:text="CountryName"
-                android:fontFamily="@font/yes"
+                android:fontFamily="@font/canterbold"
                 android:textColor="@color/white"
-                android:textSize="35sp"
+                android:textSize="70sp"
                 android:shadowColor="#000000"
-                android:shadowDx="0.2"
-                android:shadowDy="0.2"
-                android:shadowRadius="0.2"/>
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1"/>
 
         </FrameLayout>
 

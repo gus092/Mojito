@@ -35,28 +35,31 @@ public class RecyclerViewHolders extends RecyclerView.ViewHolder implements View
                 printName = "KOREA";
                 break;
             case 1:
-                printName = "EUROPE";
+                printName = "INDIA / SE ASIA";
                 break;
             case 2:
-                printName = "USA / CANADA";
+                printName = "AMERICAS";
                 break;
             case 3:
                 printName = "JAPAN";
                 break;
             case 4:
-                printName = "AFRICA";
+                printName = "AFRICA / MIDDLE EAST";
                 break;
             case 5:
-                printName = "ASIA / INDIA";
+                printName = "EUROPE";
                 break;
             case 6:
                 printName = "CHINA / TAIWAN";
                 break;
             case 7:
-                printName = "OTHERS";
+                printName = "OCEANIA / GUAM";
+                break;
+            case 8:
+                printName = "RUSSIA / CENTRAL ASIA";
                 break;
             default:
-                printName = "OTHERS";
+                printName = "RUSSIA / CENTRAL ASIA";
                 break;
         } // dirname으로 어떤 나라의 갤러리 카테고리로 들어왔는지 구분
 

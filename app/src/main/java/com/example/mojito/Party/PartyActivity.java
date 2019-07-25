@@ -40,7 +40,7 @@ import java.io.InputStream;
 import java.sql.Ref;
 import java.util.ArrayList;
 
-public class PartyActivity extends AppCompatActivity implements PartyAdapter.OnItemClickListener2{
+public class PartyActivity extends AppCompatActivity implements PartyAdapter.OnItemClickListener2 {
     static final int REQ_MAKE_PARTY = 5921;
     public static ArrayList<PartyItem> party_items; //누나꺼에서 mUploads
     RecyclerView recyclerView;
@@ -49,9 +49,12 @@ public class PartyActivity extends AppCompatActivity implements PartyAdapter.OnI
     private DatabaseReference mDatabaseRef;
     PartyItem party_item;
     String key;
-//
+
+    //
 //    Loadpartys loadpartyTask;
-    public PartyActivity(){ }
+    public PartyActivity() {
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,8 +91,8 @@ public class PartyActivity extends AppCompatActivity implements PartyAdapter.OnI
 //            @Override
 //            public void onCancelled(@NonNull DatabaseError databaseError) {}
 //        };
-       // mDatabaseRef.addListenerForSingleValueEvent(valueEventListener);
-        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+        // mDatabaseRef.addListenerForSingleValueEvent(valueEventListener);
+        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 party_items.clear();
@@ -137,23 +140,31 @@ public class PartyActivity extends AppCompatActivity implements PartyAdapter.OnI
 //                partyAdapter = new PartyAdapter(party_items);
 //                partyAdapter.notifyDataSetChanged();
 //                recyclerView.setAdapter(partyAdapter);
-    }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
 //
-//            }
-//        });
-//
-//        // ADD party Button
-//        ImageButton make_party = findViewById(R.id.make_party);
-//        make_party.setOnClickListener(new ImageButton.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                Intent intent = new Intent(PartyActivity.this, MakeParty.class) ;
-//                startActivityForResult(intent, REQ_MAKE_PARTY);
-//            }
-//        });
-        // SYNCHRONIZATION PARTY Button
+        // ADD party Button
+        ImageButton make_party = findViewById(R.id.make_party);
+        make_party.setOnClickListener(new ImageButton.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(PartyActivity.this, MakeParty.class) ;
+                startActivityForResult(intent, REQ_MAKE_PARTY);
+            }
+        });
+
+        ImageButton match_party = findViewById(R.id.btn_Match);
+        match_party.setOnClickListener(new ImageButton.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+            }
+
+        });
+                // SYNCHRONIZATION PARTY Button
 //        FloatingActionButton sync_party = findViewById(R.id.sync_Button); //TODO root로 쓰는게 맞나?
 //        sync_party.setOnClickListener(new Button.OnClickListener(){
 //            @Override
@@ -161,25 +172,24 @@ public class PartyActivity extends AppCompatActivity implements PartyAdapter.OnI
 ////                getpartyList();
 //                recreate();
 //            }
-//        });
-
-
-    @Override
-    public void onItemClick(int position){ //파티 클릭했을 때
-        Intent party_Intent = new Intent(PartyActivity.this, ShowParty.class);
-        party_item = party_items.get(position);
-        party_Intent.putExtra("position",position);
-        party_Intent.putExtra("destination", party_item.getDestination());
-        party_Intent.putExtra("capacity", party_item.getCapacity());
-        party_Intent.putExtra("number", party_item.getNum_people());
-        party_Intent.putExtra("attribute",party_item.getAttribute());
-        party_Intent.putExtra("description", party_item.getDescription());
-        startActivity(party_Intent);
+//        })
+        }
+        @Override
+        public void onItemClick ( int position){ //파티 클릭했을 때
+            Intent party_Intent = new Intent(PartyActivity.this, ShowParty.class);
+            party_item = party_items.get(position);
+            party_Intent.putExtra("position", position);
+            party_Intent.putExtra("destination", party_item.getDestination());
+            party_Intent.putExtra("capacity", party_item.getCapacity());
+            party_Intent.putExtra("number", party_item.getNum_people());
+            party_Intent.putExtra("attribute", party_item.getAttribute());
+            party_Intent.putExtra("description", party_item.getDescription());
+            startActivity(party_Intent);
+        }
+        @Override
+        protected void onDestroy(){
+            super.onDestroy();
+            mDatabaseRef.removeEventListener(mDBListener);
+        }
     }
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        mDatabaseRef.removeEventListener(mDBListener);
-    }
 
-}
