@@ -1,9 +1,9 @@
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:fontFamily">@font/aaargh</item>
-        <item name="colorPrimary">@color/mojito</item>
-        <item name="colorPrimaryDark">#006a00</item>
-        <item name="colorAccent">#62a0c4</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="ImageRatingBar" parent="@android:style/Widget.RatingBar">

@@ -85,6 +85,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
             public void onClick(View view){
                 Intent intent = new Intent(getApplicationContext(),FirebaseGallery.class);
                 startActivity(intent);
+                finish();
             }
         });
 

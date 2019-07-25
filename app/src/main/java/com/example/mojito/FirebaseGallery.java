@@ -105,7 +105,7 @@ public class FirebaseGallery extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
 
-        mTextViewShowUploads.setText("Go back to\n"+ printName + "\n Gallery");
+        mTextViewShowUploads.setText("Go back to \n Gallery");
 
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -384,7 +384,7 @@ public class FirebaseGallery extends AppCompatActivity {
                                     Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),downloadUrl.toString(),uploadPhtocountryName,userName,likedlist);
                                     String uploadId = mDatabaseRef.push().getKey();
                                     mDatabaseRef.child(uploadId).setValue(upload);
-                                    Toast.makeText(getBaseContext(), "Upload success! URL - " + downloadUrl.toString() , Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(getBaseContext(), "Upload success! URL - " + downloadUrl.toString() , Toast.LENGTH_SHORT).show();
                                 }
                             });
                             //added
@@ -413,5 +413,6 @@ public class FirebaseGallery extends AppCompatActivity {
     private void openImagesActivity() {
         Intent intent = new Intent(this, ImagesActivity.class);
         startActivity(intent);
+        finish();
     }
 }

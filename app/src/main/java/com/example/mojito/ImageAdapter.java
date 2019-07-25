@@ -52,6 +52,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         Upload uploadCurrent = mUploads.get(position);
         holder.textViewName.setText(uploadCurrent.getName());
         Log.e("textViewName","is.."+uploadCurrent.getName());
+        holder.likedNumber.setText("0");
 
        // holder.lime_btn.setImageResource(R.drawable.lime2);
         for (int i=0; i<mUploads.get(position).getmlikedUserList().size();i++){
@@ -76,10 +77,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
             }
         }
-
-
-
-
+        holder.likedNumber.setText(String.valueOf(mUploads.get(position).getmlikedUserList().size()-2));
 
        // Log.e("현재 이미지는..","Now.."+uploadCurrent.getImageUrl());
 
@@ -101,6 +99,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         public TextView textViewName;
         public ImageView imageView;
         public ImageButton lime_btn;
+        public TextView likedNumber;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
@@ -108,6 +107,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             textViewName = itemView.findViewById(R.id.text_view_name);
             imageView = itemView.findViewById(R.id.image_view_upload);
             lime_btn = itemView.findViewById(R.id.lime_btn);
+            likedNumber = itemView.findViewById(R.id.allLikedNum);
 
             //added
             lime_btn.setOnClickListener(this);

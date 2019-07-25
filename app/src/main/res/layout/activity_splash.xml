@@ -4,7 +4,7 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/splashBackground"
     >
 
 
@@ -31,10 +31,10 @@
             android:id="@+id/splashText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MOJITO"
+            android:text="Mojito"
             android:fontFamily="@font/sunbold"
-            android:textColor="@color/splashBackground"
-            android:textSize="65sp"
+            android:textColor="@color/white"
+            android:textSize="80sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
