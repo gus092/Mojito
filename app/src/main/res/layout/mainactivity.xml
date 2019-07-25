@@ -25,7 +25,7 @@
             android:layout_marginBottom="0dp"
             android:clickable="true"
             android:focusable="true"
-            app:srcCompat="@drawable/mojitologo2" />
+            app:srcCompat="@drawable/btn"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

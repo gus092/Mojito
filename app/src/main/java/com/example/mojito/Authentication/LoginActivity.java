@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.loginactivity);
         Button btn_emailSignIn = findViewById(R.id.btn_emailSignIn);
         Button btn_facebookSignIn = findViewById(R.id.btn_facebookSignIn);
+        btn_facebookSignIn.setText("TESTT");
         btn_emailSignIn.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view){

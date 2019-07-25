@@ -1,19 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/icon"
-        style="@style/ThemeOverlay.FirebaseIcon"
-        android:layout_width="match_parent"
+    <!--<ImageView-->
+    <!--android:id="@+id/icon"-->
+    <!--android:layout_width="317dp"-->
+    <!--android:layout_height="356dp"-->
+    <!--android:layout_marginTop="32dp"-->
+    <!--android:src="@drawable/mojito"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <TextView
+        android:id="@+id/mainLogoText"
+        android:layout_width="207dp"
+        android:layout_height="123dp"
+        android:layout_marginTop="200dp"
+        android:fontFamily="@font/sunbold"
+        android:text="Mojito"
+        android:textColor="@color/splashBackground"
+        android:textSize="150sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/OR"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="-200sp"
-        android:src="@drawable/mojito" />
+        android:layout_marginTop="16dp"
+        android:text="OR"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_emailSignIn" />
+
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/btn_facebookSignIn"
@@ -21,26 +47,54 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_emailSignIn"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32sp"
-        android:text="@string/fui_sign_in_with_facebook"
-        android:textAllCaps="false" />
+        android:layout_marginTop="16dp"
+        android:text=" Facebook "
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/OR" />
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/btn_googleSignIn"
+    <TextView
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_facebookSignIn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32sp"/>
+        android:layout_marginTop="80dp"
+        android:text="Sign in with"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainLogoText" />
+
+    <!--<Button-->
+    <!--android:id="@+id/btn_facebookSignIn"-->
+    <!--android:layout_width="130dp"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:layout_marginEnd="5dp"-->
+    <!--android:layout_marginBottom="28dp"-->
+    <!--android:background="@drawable/button_background"-->
+    <!--android:text=" Facebook "-->
+    <!--android:textAllCaps="false"-->
+    <!--android:textSize="15dp"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toStartOf="@+id/btn_emailSignIn"-->
+    <!--app:layout_constraintHorizontal_bias="0.5"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/textView7" />-->
+
 
     <Button
         android:id="@+id/btn_emailSignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/icon"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-200sp"
-        android:text="Sign in with Email"
-        android:textAllCaps="false" />
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button_background"
+        android:text=" Email "
+        android:textAllCaps="false"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
