@@ -88,11 +88,6 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                 finish();
             }
         });
-
-
-
-
-
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
 
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {

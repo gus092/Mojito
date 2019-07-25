@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
@@ -20,6 +21,7 @@ import com.google.android.material.chip.Chip;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 
@@ -34,6 +36,10 @@ public class ShowParty extends AppCompatActivity {
     Intent intent;
     String temp_string;
     Integer position;
+    ArrayList<String> temp_array;
+    String temp_members="";
+    int i;
+    int love;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_party);
@@ -48,10 +54,16 @@ public class ShowParty extends AppCompatActivity {
         });
         TextView destination = findViewById(R.id.destination);
         destination.setText(intent.getStringExtra("destination"));
+        destination.setSelected(true);
         RatingBar memberbar = findViewById(R.id.capacity2);
-        memberbar.setMax(intent.getIntExtra("capacity",12));
-        memberbar.setRating(intent.getIntExtra("number",1));
+        memberbar.setNumStars(intent.getIntExtra("capacity",1));
         TextView membername = findViewById(R.id.members);
+        temp_array = intent.getStringArrayListExtra("members");
+        for (i=0; i<temp_array.size();i++){
+            temp_members=temp_members+temp_array.get(i)+"\n";
+        }
+        membername.setText(temp_members);
+        memberbar.setRating(temp_array.size());
         temp_string =intent.getStringExtra("attribute");
         String[] attributes = temp_string.split(" ");
         Chip chip1 = findViewById(R.id.chip1_1);
@@ -87,26 +99,27 @@ public class ShowParty extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //확인시 처리 로직
                         PartyItem selectedItem = party_items.get(position);
-                        final String selectedKey = selectedItem.getKey();
-                        DatabaseReference temp_child = mDatabaseRef.child("parties");
-                        temp_child.orderByChild("members").addListenerForSingleValueEvent(new ValueEventListener() {
+                        String selectedKey = selectedItem.getKey();
+                        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("parties");
+                        mDatabaseRef.orderByChild("members").addListenerForSingleValueEvent(new ValueEventListener() {
                             ArrayList<String> members;
                             Integer number_people;
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-
                                 PartyItem partyitem = dataSnapshot.child(selectedKey).getValue(PartyItem.class);
                                 members = partyitem.getMembers();
                                 number_people = partyitem.getNum_people();
                                 if (members.contains(userName)) {
                                     Toast.makeText(ShowParty.this, "You are already in party", Toast.LENGTH_SHORT).show();
                                 }
-                                else if((number_people+1)==partyitem.getCapacity()){
+                                else if(number_people==partyitem.getCapacity()){
                                     Toast.makeText(ShowParty.this, "Already full", Toast.LENGTH_SHORT).show();
                                 }
                                 else{
                                     members.add(userName);
+                                    mDatabaseRef.child(selectedKey).child("members").setValue(members);
                                     Toast.makeText(ShowParty.this, "Success!", Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }
                             }
 

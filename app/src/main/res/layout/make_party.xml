@@ -427,14 +427,15 @@
 
         <RatingBar
             android:id="@+id/capacity"
+            style="@style/ImageRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:isIndicator="false"
             android:numStars="12"
             android:rating="1"
-            android:stepSize="1"
-            android:layout_marginStart="16dp"
-            style="@style/ImageRatingBar"
-            android:layout_width="360dip"
-            android:layout_height="30dip"/>
+            android:stepSize="1" />
 
         <TextView
             android:id="@+id/textView2"

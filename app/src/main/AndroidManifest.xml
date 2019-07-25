@@ -61,5 +61,6 @@
         <activity android:name=".Authentication.EmailPasswordActivity"/>
         <activity android:name=".FirebaseGallery" />
         <activity android:name=".ImagesActivity" />
+        <activity android:name=".Party.ShowParty"/>"
     </application>
 </manifest>

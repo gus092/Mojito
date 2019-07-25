@@ -23,19 +23,22 @@ import java.util.ArrayList;
 
 public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.Partyviewholder> {
     private ArrayList<PartyItem> mDataset;
+    private OnItemClickListener pListener;
     public interface OnItemClickListener{
         void onItemClick(View v, int position);
     }
 
-    private static OnItemClickListener pListener = null;
 //    private static OnItemLongClickListener2 pLongListener = null;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.pListener = listener;
     }
+    public PartyAdapter(ArrayList<PartyItem> list) {
+        mDataset = list;
+    }
 
     // View Holder
-    public static class Partyviewholder extends RecyclerView.ViewHolder{
+    public class Partyviewholder extends RecyclerView.ViewHolder{
         public TextView destination;
         //        public TextView attribute;
 //        public TextView user_id;
@@ -43,23 +46,23 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.Partyviewhol
         public ProgressBar progressBar;
         public TextView progressBar_num;
 
-        Partyviewholder(View itemView) {
+        public Partyviewholder(View itemView) {
             super(itemView);
             destination = itemView.findViewById(R.id.destination_holder);
 //            description = itemView.findViewById(R.id.description);
             progressBar = itemView.findViewById(R.id.number);
             progressBar_num = itemView.findViewById(R.id.progress_num);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        if (pListener != null) {
-                            pListener.onItemClick(v, position);
-                        }
-                    }
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int position = getAdapterPosition();
+//                    if (position != RecyclerView.NO_POSITION) {
+//                        if (pListener != null) {
+//                            pListener.onItemClick(v, position);
+//                        }
+//                    }
+//                }
+//            });
         }
     }
 //            itemView.setOnLongClickListener(this);
@@ -131,17 +134,13 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.Partyviewhol
 //            return true;
 //        }
 
-    // Set Dataset
-    public PartyAdapter(ArrayList<PartyItem> list) {
-        mDataset = list;
-    }
-
     // Create View Holder
     @Override
-    public PartyAdapter.Partyviewholder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Partyviewholder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.party_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.party_item,parent,false);
+//        View view = inflater.inflate(R.layout.party_item, parent, false);
         Partyviewholder vh = new Partyviewholder(view);
         return vh;
     }
@@ -159,12 +158,15 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.Partyviewhol
 //        holder.description.setText(PartyItem.getDescription());
         holder.progressBar.setProgress(partyItem.getNum_people());
         holder.progressBar_num.setText(String.format("%d/%d", partyItem.getNum_people(), partyItem.getCapacity()));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO
-            }
-        });
+        if(pListener!=null) {
+            final int pos = position;
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    pListener.onItemClick(view,pos);
+                }
+            });
+        }
     }
 
 
