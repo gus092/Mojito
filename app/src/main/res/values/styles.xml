@@ -1,11 +1,9 @@
 <resources>
-
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/aaargh</item>
+        <item name="colorPrimary">@color/mojito</item>
+        <item name="colorPrimaryDark">#006a00</item>
+        <item name="colorAccent">#62a0c4</item>
     </style>
 
     <style name="ImageRatingBar" parent="@android:style/Widget.RatingBar">
@@ -30,6 +28,13 @@
         <item name="android:textSize">36sp</item>
     </style>
 
+    <!--<style name="SummerTextViewStyle" parent="android:Widget.TextView">-->
+        <!--<item name="android:fontFamily"></item>-->
+    <!--</style>-->
+
+    <!--<style name="SummerButtonStyle" parent="android:Widget.Holo.Button">-->
+        <!--<item name="android:fontFamily">@font/Summer Font Light</item>-->
+    <!--</style>-->
     <style name="ThemeOverlay.MyTextDetail" parent="AppTheme">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
