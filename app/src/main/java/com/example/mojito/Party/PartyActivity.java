@@ -59,7 +59,8 @@ public class PartyActivity extends AppCompatActivity implements PartyAdapter.OnI
         recyclerView = findViewById(R.id.party_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ArrayList<PartyItem> party_items = new ArrayList<PartyItem>();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("parties");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("parties");
+
 //        ValueEventListener valueEventListener = new ValueEventListener() {
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -87,49 +88,49 @@ public class PartyActivity extends AppCompatActivity implements PartyAdapter.OnI
 //            @Override
 //            public void onCancelled(@NonNull DatabaseError databaseError) {}
 //        };
-//        mDatabaseRef.addListenerForSingleValueEvent(valueEventListener);
-//        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                party_items.clear();
-//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                    String key = postSnapshot.getKey();
-//                    PartyItem partyItem = postSnapshot.child(key).getValue(PartyItem.class);
-//                    party_items.add(partyItem);
-////                    PartyItem partyItem = postSnapshot.getValue(PartyItem.class);
-////                    partyItem.setKey(key);
-//                    //Log.e("count","the number of count.."+count);
+       // mDatabaseRef.addListenerForSingleValueEvent(valueEventListener);
+        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                party_items.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    String key = postSnapshot.getKey();
+                    PartyItem partyItem = postSnapshot.child(key).getValue(PartyItem.class);
+                    party_items.add(partyItem);
+//                    PartyItem partyItem = postSnapshot.getValue(PartyItem.class);
+//                    partyItem.setKey(key);
+                    //Log.e("count","the number of count.."+count);
 //                }
-        mDatabaseRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                String key = dataSnapshot.getKey();
-                PartyItem partyItem = dataSnapshot.child(key).getValue(PartyItem.class);
-                party_items.add(partyItem);
-//                partyAdapter.notifyDataSetChanged();
-                recyclerView.setAdapter(partyAdapter);
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//        mDatabaseRef.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                String key = dataSnapshot.getKey();
+//                PartyItem partyItem = dataSnapshot.child(key).getValue(PartyItem.class);
+//                party_items.add(partyItem);
+////                partyAdapter.notifyDataSetChanged();
+//                recyclerView.setAdapter(partyAdapter);
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
 //                party_items.add( dataSnapshot.child("-LkbxheYVLBWl-lw-G99").getValue(PartyItem.class));
