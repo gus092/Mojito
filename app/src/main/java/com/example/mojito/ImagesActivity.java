@@ -18,10 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.mojito.Party.PartyActivity;
 import com.example.mojito.R;
 import com.example.mojito.Upload;
 import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,6 +54,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.imagesactivity);
+        //getActionBar().hide();
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -76,10 +79,10 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         //delete added
 
         //upload 페이지 전환
-        Button firebaseUploadBtn = (Button) findViewById(R.id.firebaseUpload_btn);
-        firebaseUploadBtn.setOnClickListener(new View.OnClickListener() {
+        final FloatingActionButton firebaseUploadBtn = findViewById(R.id.firebaseUpload_btn);
+        firebaseUploadBtn.setOnClickListener(new FloatingActionButton.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
                 Intent intent = new Intent(getApplicationContext(),FirebaseGallery.class);
                 startActivity(intent);
             }

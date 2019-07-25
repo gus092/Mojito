@@ -34,9 +34,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Authentication.LoginActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".Authentication.LoginActivity">
+            <!--android:label="@string/app_name"-->
+            <!--android:theme="@style/AppTheme.NoActionBar">-->
         </activity>
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_application_id"
@@ -51,14 +51,15 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBRo7_E8in3_-fio4dGWhvpC4D-Pc_6AQw"/>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity"
+                    android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".Party.OpenMap"/>
-        <activity android:name=".uploadPhotoActivity"/>
+        <!--<activity android:name=".uploadPhotoActivity"/>-->
         <activity android:name=".Party.PartyActivity"/>
-        <activity android:name=".CustomGallery"/>
+        <!--<activity android:name=".CustomGallery"/>-->
         <activity android:name=".Party.MakeParty"/>
         <activity android:name=".Authentication.EmailPasswordActivity"/>
-        <activity android:name=".FirebaseGallery"/>
-        <activity android:name=".ImagesActivity"/>
+        <activity android:name=".FirebaseGallery" />
+        <activity android:name=".ImagesActivity" />
     </application>
 </manifest>
