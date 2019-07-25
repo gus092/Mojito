@@ -8,35 +8,69 @@
     android:layout_height="match_parent"
     tools:context=".Party.PartyActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
+        <ImageButton
             android:id="@+id/make_party"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="New party!"
-            android:textAllCaps="false"/>
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/lime"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/party_recycler"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:scrollbars="vertical"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="8dp" />
-    </LinearLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/make_party" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/sync_Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:clickable="true"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/baseline_autorenew_24"
-        android:focusable="true" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="40sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="New Party!"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@+id/make_party"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="40sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Search"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@+id/btn_Search"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_Search"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/mint" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

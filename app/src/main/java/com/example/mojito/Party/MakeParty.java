@@ -44,7 +44,7 @@ public class MakeParty extends AppCompatActivity {
     String attribute = "";
     String description = "";
     Integer capacity;
-    Integer num_people = 1;
+    ArrayList<String> members;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,12 +80,27 @@ public class MakeParty extends AppCompatActivity {
                 ChipGroup chipgroup6 = findViewById(R.id.chipgroup6);
                 Chip selected6 = findViewById(chipgroup6.getCheckedChipId());
                 attribute += " "+selected6.getText();
+                ChipGroup chipgroup7 = findViewById(R.id.chipgroup7);
+                Chip selected7 = findViewById(chipgroup7.getCheckedChipId());
+                attribute += " "+selected7.getText();
+                ChipGroup chipgroup8 = findViewById(R.id.chipgroup8);
+                Chip selected8 = findViewById(chipgroup8.getCheckedChipId());
+                attribute += " "+selected8.getText();
+                ChipGroup chipgroup9 = findViewById(R.id.chipgroup9);
+                Chip selected9 = findViewById(chipgroup9.getCheckedChipId());
+                attribute += " "+selected9.getText();
+                ChipGroup chipgroup10 = findViewById(R.id.chipgroup10);
+                Chip selected10 = findViewById(chipgroup10.getCheckedChipId());
+                attribute += " "+selected10.getText();
 
                 EditText edit_description = findViewById(R.id.description);
                 description = edit_description.getText().toString();
 
                 RatingBar ratingBar = findViewById(R.id.capacity);
                 capacity = (int) ratingBar.getRating();
+
+                members = new ArrayList<String>();
+                members.add(userName);
 
                 if (destination.length()==0) {
                     Toast.makeText(MakeParty.this, "Select your destination", Toast.LENGTH_SHORT).show();
@@ -110,7 +125,7 @@ public class MakeParty extends AppCompatActivity {
         switch (requestCode) {
             case (REQ_OPEN_MAP): {
                 if (resultCode == Activity.RESULT_OK) {
-                    TextView show_destinations = findViewById(R.id.destinations);
+                    EditText show_destinations = findViewById(R.id.destinations);
                     ArrayList<String> destinations = data.getStringArrayListExtra("destinations");
                     for (int i = 0; i < destinations.size(); i++) {
                         destination += destinations.get(i) + "\n";
@@ -132,17 +147,17 @@ public class MakeParty extends AppCompatActivity {
     //add==True면 데이터 저장, 이미 있으면 업데이트, add==False면 데이터 삭제
     public void postFirebaseDatabase(boolean add) {
         mPostReference = FirebaseDatabase.getInstance().getReference("parties");
-        User_Name = userName;
+//        User_Name = userName;
         String uploadId = mPostReference.push().getKey();
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
         if (add) {
-            PartyItem partyItem = new PartyItem(User_Name, destination, attribute, description, capacity, num_people);
+            PartyItem partyItem = new PartyItem(userName, destination, attribute, description, capacity, members);
             postValues = partyItem.toMap();
         }
-        String[] temp = User_Name.split("@");
-        mPostReference.child(temp[0]+uploadId).setValue(postValues);
-        Toast.makeText(getBaseContext(), "Upload successful, " + User_Name , Toast.LENGTH_SHORT).show();
+//        String[] temp = userName.split("@");
+        mPostReference.child(uploadId).setValue(postValues);
+        Toast.makeText(getBaseContext(), "Upload successful, " + userName , Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -44,7 +44,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.image_item, parent, false);
-        Log.e("I'm here","onCreatViewholder..");
         return new ImageViewHolder(v);
     }
 
@@ -90,7 +89,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 //                .fit()
                 .centerCrop()
                 .into(holder.imageView);
-
     }
 
 
@@ -127,7 +125,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                     mListener.onItemClick(position);
                    // Toast.makeText(mContext,"This is aboutclicklistener", Toast.LENGTH_LONG).show();
 //                    Glide.with(mContext).load(R.drawable.lime2).into(holder.lime_btn);
-
                 }
             }
         }
@@ -149,11 +146,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     public interface OnItemClickListener{
         void onItemClick(int position);
-
-        //void onDeleteClick(int position);
-//
-//        void onWhatEverClick(int position);
-//        void onDeleteClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){
