@@ -94,6 +94,7 @@ public class ShowParty extends AppCompatActivity {
                             Integer number_people;
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
+
                                 PartyItem partyitem = dataSnapshot.child(selectedKey).getValue(PartyItem.class);
                                 members = partyitem.getMembers();
                                 number_people = partyitem.getNum_people();

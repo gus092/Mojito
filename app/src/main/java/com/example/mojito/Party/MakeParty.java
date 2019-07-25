@@ -146,17 +146,19 @@ public class MakeParty extends AppCompatActivity {
 
     //add==True면 데이터 저장, 이미 있으면 업데이트, add==False면 데이터 삭제
     public void postFirebaseDatabase(boolean add) {
+        PartyItem partyItem=null;
         mPostReference = FirebaseDatabase.getInstance().getReference("parties");
 //        User_Name = userName;
         String uploadId = mPostReference.push().getKey();
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
         if (add) {
-            PartyItem partyItem = new PartyItem(userName, destination, attribute, description, capacity, members);
-            postValues = partyItem.toMap();
+            partyItem = new PartyItem(userName, destination, attribute, description, capacity, members);
+            //postValues = partyItem.toMap();
         }
 //        String[] temp = userName.split("@");
-        mPostReference.child(uploadId).setValue(postValues);
+        mPostReference.child(uploadId).setValue(partyItem);
+        //mPostReference.child(uploadId).setValue(partyItem);
         Toast.makeText(getBaseContext(), "Upload successful, " + userName , Toast.LENGTH_SHORT).show();
     }
 

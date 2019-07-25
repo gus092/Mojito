@@ -12,14 +12,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @IgnoreExtraProperties
-public class PartyItem implements Serializable {
-    public String destination;
-    public String user_Name;
-    public String attribute;
-    public String description;
-    public Integer capacity;
-    public Integer num_people;
-    public ArrayList<String> members;
+public class PartyItem  {
+    private String destination;
+    private String user_Name;
+    private String attribute;
+    private String description;
+    private Integer capacity;
+    private Integer num_people;
+    private ArrayList<String> members;
 
     public String mKey;
 
@@ -32,8 +32,7 @@ public class PartyItem implements Serializable {
         this.description = description;
         this.capacity = capacity;
         this.members = members;
-        this.num_people = members.size();
-    }
+        this.num_people = members.size(); }
 
     public void setDestination(String destination){
         this.destination = destination;
@@ -47,7 +46,6 @@ public class PartyItem implements Serializable {
         this.user_Name = string;
     }
     public String getuser_Name(){
-        Log.e("getuser_Name(","...."+getuser_Name());
         return user_Name;
     }
 
@@ -66,16 +64,16 @@ public class PartyItem implements Serializable {
     }
 
     public void setCapacity(Integer integer){this.capacity = integer;}
-    public Integer getCapacity(){return members.size();}
+    public Integer getCapacity(){return capacity;}
 
 //    public void setNum_people(Integer integer){this.num_people = integer;}
-    public Integer getNum_people(){return num_people;}
+    public Integer getNum_people(){return members.size();}
 
-    public void setMembers(String string){this.members.add(string);}
+    public void setMembers(ArrayList<String> arrayList){members = arrayList;}
 
     public ArrayList<String> getMembers(){
-        for(int i=0;i<members.size();i++)
-        Log.e("members","...."+members.get(i));
+//        for(int i=0;i<members.size();i++)
+//        Log.e("members","...."+members.get(i));
         return members;}
 
     @Exclude
@@ -87,18 +85,18 @@ public class PartyItem implements Serializable {
         mKey =key;
     }
 
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("user_Name", user_Name);
-        result.put("destination", destination);
-        result.put("attribute", attribute);
-        result.put("description", description);
-        result.put("capacity",capacity);
-        result.put("num_people",num_people);
-        result.put("members",members);
-        return result;
-    }
+//    @Exclude
+//    public Map<String, Object> toMap() {
+//        HashMap<String, Object> result = new HashMap<>();
+//        result.put("user_Name", user_Name);
+//        result.put("destination", destination);
+//        result.put("attribute", attribute);
+//        result.put("description", description);
+//        result.put("capacity",capacity);
+//        result.put("num_people",num_people);
+//        result.put("members",members);
+//        return result;
+//    }
 
 
 }

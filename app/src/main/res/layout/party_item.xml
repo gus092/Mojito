@@ -7,36 +7,38 @@
     android:layout_height="wrap_content"
     android:background="@drawable/party_background">
 
-
     <TextView
         android:id="@+id/destination_holder"
-        android:layout_width="150sp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:textSize="40sp"
+        android:layout_marginEnd="16dp"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/number"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="80sp"
-        android:layout_height="80sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="120sp"
+        android:layout_height="120sp"
         android:indeterminate="false"
         android:progressDrawable="@drawable/circular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/progress_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/number"
         app:layout_constraintEnd_toEndOf="@+id/number"
         app:layout_constraintStart_toStartOf="@+id/number"

@@ -21,35 +21,47 @@ import java.util.ArrayList;
 //import static com.example.week1.ui.party.TabFragment1.REQ_EDIT_party;
 
 
-public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.partyviewholder> {
+public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.Partyviewholder> {
     private ArrayList<PartyItem> mDataset;
-//
-//    public interface {
-//        void onItemClick(View v, int position, int request_code);
-//    }
+    public interface OnItemClickListener{
+        void onItemClick(View v, int position);
+    }
 
-    private static OnItemClickListener2 pListener = null ;
+    private static OnItemClickListener pListener = null;
 //    private static OnItemLongClickListener2 pLongListener = null;
 
-    public void setOnItemClickListener(OnItemClickListener2 listener) {
-        pListener = listener;
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.pListener = listener;
     }
 
     // View Holder
-    public static class partyviewholder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class Partyviewholder extends RecyclerView.ViewHolder{
         public TextView destination;
-//        public TextView attribute;
+        //        public TextView attribute;
 //        public TextView user_id;
 //        public TextView description;
         public ProgressBar progressBar;
         public TextView progressBar_num;
-        public partyviewholder(final View itemView){
+
+        Partyviewholder(View itemView) {
             super(itemView);
             destination = itemView.findViewById(R.id.destination_holder);
 //            description = itemView.findViewById(R.id.description);
             progressBar = itemView.findViewById(R.id.number);
             progressBar_num = itemView.findViewById(R.id.progress_num);
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        if (pListener != null) {
+                            pListener.onItemClick(v, position);
+                        }
+                    }
+                }
+            });
+        }
+    }
 //            itemView.setOnLongClickListener(this);
 
 //            final LinearLayout addView = (LinearLayout) itemView.findViewById(R.id.add_sub);
@@ -107,16 +119,6 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.partyviewhol
 ////                    }
 ////                }
 //            });
-        }
-        @Override
-        public void onClick(View v){
-            if(pListener != null){
-                int position = getAdapterPosition();
-                if(position !=RecyclerView.NO_POSITION){
-                    pListener.onItemClick(position);
-                }
-            }
-        }
 
 //        @Override
 //        public boolean onLongClick(View v){
@@ -128,56 +130,61 @@ public class PartyAdapter extends RecyclerView.Adapter<PartyAdapter.partyviewhol
 //            }
 //            return true;
 //        }
-    }
 
     // Set Dataset
-    public PartyAdapter(ArrayList<PartyItem> list){
-        mDataset= list;
+    public PartyAdapter(ArrayList<PartyItem> list) {
+        mDataset = list;
     }
 
     // Create View Holder
     @Override
-    public PartyAdapter.partyviewholder onCreateViewHolder(ViewGroup parent, int viewType){
+    public PartyAdapter.Partyviewholder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.party_item, parent, false);
-        partyviewholder vh = new partyviewholder(view);
+        Partyviewholder vh = new Partyviewholder(view);
         return vh;
     }
 
     // Bind View Holder
     @Override
-    public void onBindViewHolder(partyviewholder holder, int position){
+    public void onBindViewHolder(Partyviewholder holder, int position) {
         PartyItem partyItem = mDataset.get(position);
         holder.progressBar.setMax(partyItem.getCapacity());
         holder.destination.setText(partyItem.getDestination());
+        holder.destination.setSelected(true);
 //        holder.attribute.setText(partyItem.getAttribute());
 //        holder.user_photo.setImageBitmap(PartyItem.getUser_photo());
 //        holder.user_id.setText(PartyItem.getuser_Name());
 //        holder.description.setText(PartyItem.getDescription());
         holder.progressBar.setProgress(partyItem.getNum_people());
-        holder.progressBar_num.setText(String.format("%d/%d",partyItem.getNum_people(),partyItem.getCapacity()));
+        holder.progressBar_num.setText(String.format("%d/%d", partyItem.getNum_people(), partyItem.getCapacity()));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO
+            }
+        });
     }
 
-    public interface OnItemClickListener2{
-        void onItemClick(int position);
-    }
 
 //    public interface OnItemLongClickListener2{
 //        void onDeleteClick2(int position);
 //    }
 
-//    public void setOnItemLongClickListener2(OnItemLongClickListener2 listener){
+    //    public void setOnItemLongClickListener2(OnItemLongClickListener2 listener){
 //        pLongListener = listener;
 //    }
     // Get Item Count
     @Override
-    public int getItemCount(){
+    public int getItemCount() {
         return mDataset.size();
     }
 
     public void onActivityResult(int requestCode, int resultCode) {
         this.notifyDataSetChanged();
     }
-
 }
+
+
+
